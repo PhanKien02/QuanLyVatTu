@@ -2,6 +2,7 @@ const express = require('express');
 import bodyParser from "body-parser";
 import db from "./configs/connectdb"
 import configsView from "./configs/configViewEngine"
+import Router from "./routes/webRouter"
 import User from "./models/User"
 import NhanhVien from "./models/NhanVien";
 import VatTu from "./models/VatTu"
@@ -19,9 +20,7 @@ app.use(bodyParser.text())
 configsView(app);
 db.authen();
 db.creteTable();
-app.get("/",(req,res)=>{
-    res.render("index.ejs")
-})
+Router(app);
 let port = process.env.PORT || 8081;
 app.listen(port, () => {
     console.log(`Example app listening http://localhost:${port}/`);

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<head lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../css/styles.css" />
+        <title>Sửa vật tư</title>
+    </head>
+    <body>
+        <div class="container">
+            <%- include('header.ejs')%>
+            <div class="main-content container  bg-secondary">
+                <h1>Sửa vật tư</h1>
+                <hr/>
+                <div class="d-flex justify-content-center">
+                    <form method="post" action="/updateVatTu" class="form-addVatTu d-flex flex-column">
+                        <div class="group d-flex justify-content-between">
+                            <div class="form-group">
+                                <label for="maVatTu">Mã vật Tư</label>
+                                <input required type="text" class="form-control" name="maVatTu" id="maVatTu" placeholder="Nhập mã vật tư" value="<%= VTUpdate.mVT %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="tenVatTu">Tên vật Tư</label>
+                                <input type="text" required class="form-control" id="tenVatTu" name="tenVatTu" placeholder="Nhập tên vật tư" value="<%= VTUpdate.tenVatTu %>">
+                            </div>
+                        </div>
+                        <div class="group d-flex justify-content-between">
+                            <div class="form-group">
+                                <label for="dongia">Đơn giá</label>
+                                <input required type="number"  pattern="[+]?[0-9]" class="form-control" name="dongia" id="dongia" placeholder="Nhập đơn giá" value="<%= VTUpdate.donGia %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="donvitinh">Đơn vị tính</label>
+                                <select required type="text" class="form-control" name="donViTinh" id="donvitinh" placeholder="Nhập đơn vị tính">
+                                    <option value="<%= VTUpdate.donViTinh %>"><%= VTUpdate.donViTinh %></option>
+                                    <%
+                                        DonViTinh.forEach((dvt) => {
+                                            %>
+                                                <option value= <%= dvt %> >
+                                                    <%= dvt %>
+                                                </option>
+                                            <%
+                                        })
+                                    %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="group d-flex justify-content-between">
+                            <div class="form-group">
+                                <label for="chungLoaiVatTu">Chủng loại vật tư</label>
+                                <select class="form-control" id="chungLoaiVatTu" onchange="getLoai()" >
+                                    <option value="" id="chungloaiVTopt" selected disabled hidden></option>
+                                    <%
+                                    ListChungLoai.forEach( (chungloai) => {
+                                        %>
+                                            <option value= <%= (chungloai.mCLVT) %> >
+                                                <%= chungloai.tenChungLoaiVatTu %>
+                                            </option>
+                                        <%
+                                        })
+                                    %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="LoaiVatTu"> loại vật tư</label>
+                                <select required name="loaiVattu" onchange="removeReload()"  class="form-control" id="LoaiVatTu" >
+                                    <option id="reloadLoaiVT" value="<%= VTUpdate.LoaiVatTu.mLVT %>"> <%= VTUpdate.LoaiVatTu.tenLoaiVatTu %> </option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="group d-flex justify-content-between">
+                            <div class="form-group">
+                                <label for="chungLoaiVatTu">Số lượng</label>
+                                <input required type="number" pattern="[+]?[0-9]" class="form-control" id="soLuong" name="soLuong"value="<%= VTUpdate.soLuong %>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="khuvuc"> Khu Vực</label>
+                                <select required name="khuvuc"  class="form-control" id="LoaiVatTu" >
+                                    <option value="<%= VTUpdate.KhuVuc.mkhu %>"><%-VTUpdate.KhuVuc.tenKhuVuc %></option>
+                                    <%
+                                        ListKhuVuc.forEach( (khuvuc) => {
+                                        %>
+                                            <option value= <%= (khuvuc.mkhu) %> >
+                                                <%= khuvuc.tenKhuVuc %>
+                                            </option>
+                                        <%
+                                        })
+                                    %>
+                                </select>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="group d-flex justify-content-between">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-muted"><a href="/">Quay lại</a></button>
+                            </div>
+                            <div class="form-group">
+                                <button type="reset" class="btn btn-dark">Hủy</button>
+                                <button type="submit" class="btn btn-success">Sửa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script
+            src="https://kit.fontawesome.com/0ec6e9d798.js"
+            crossorigin="anonymous"></script>
+        <script>
+            var ListChungLoai = <%- JSON.stringify(ListChungLoai) %>;
+            var VUpdate = <%- JSON.stringify(VTUpdate) %>;
+            var vlChungLoai = document.getElementById("chungloaiVTopt");
+            var LoaiVTs;
+            var chungLoaiVatTu = document.getElementById("chungLoaiVatTu");
+            var LoaiVatTu = document.getElementById("LoaiVatTu");
+            for(i =0 ;i < ListChungLoai.length;i++ ){
+                    if(ListChungLoai[i].mCLVT == VUpdate.LoaiVatTu.mCLVT){
+                        vlChungLoai.innerHTML = ListChungLoai[i].tenChungLoaiVatTu;
+                        LoaiVTs = ListChungLoai[i].LoaiVatTu;
+                        console.log(LoaiVTs);
+                        for(i=0;i<LoaiVTs.length;i++)
+                        {
+                            var opt = document.createElement('option');
+                            opt.value = LoaiVTs[i].mCLVT
+                            opt.innerHTML = LoaiVTs[i].tenLoaiVatTu;
+                            LoaiVatTu.appendChild(opt);
+                        }
+                        break;
+                    }
+                }
+            function removeReload(){
+                console.log("demo");
+               let reload =  document.getElementById("reloadLoaiVT");
+               if(reload)
+                    reload.remove()
+            else
+                return;
+            }
+            function getLoai (){
+                for(i =0 ;i < ListChungLoai.length;i++ ){
+                    if(ListChungLoai[i].mCLVT == chungLoaiVatTu.value){
+                        console.log(ListChungLoai[i].mCLVT);
+                        LoaiVTs = ListChungLoai[i].LoaiVatTu;
+                        break;
+                    }
+                }
+                var child = LoaiVatTu.lastElementChild; 
+                while (child) {
+                    LoaiVatTu.removeChild(child);
+                    child = LoaiVatTu.lastElementChild;
+                }
+                for(i=0;i<LoaiVTs.length;i++)
+                {
+                    var opt = document.createElement('option');
+                    opt.value = LoaiVTs[i].mCLVT
+                    opt.innerHTML = LoaiVTs[i].tenLoaiVatTu;
+                    LoaiVatTu.appendChild(opt);
+                }
+            } 
+        </script>
+    </body>
+</html>

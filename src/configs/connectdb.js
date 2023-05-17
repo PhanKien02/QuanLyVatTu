@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('doan', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
+    logging: false
 });
 const authen = async()=>{
     sequelize.authenticate().then(()=>{

@@ -17,12 +17,11 @@ const LoaiVatTu = sequelize.define(
         tableName: "LoaiVatTu",
     }
 );
-LoaiVatTu.belongsTo(ChungLoaiVatTu, {
+ChungLoaiVatTu.hasMany(LoaiVatTu, {
     foreignKey: "mCLVT",
-    as: "ChungLoaiVatTu",
+    as: "LoaiVatTu",
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
 });
-
 LoaiVatTu.sync();
 module.exports = LoaiVatTu;

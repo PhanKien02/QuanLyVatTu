@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../configs/connectdb").sequelize;
+import LoaiVatTu from "./LoaiVatTu"
 const ChungLoaiVatTu = sequelize.define(
     "ChungLoaiVatTu",
     {
