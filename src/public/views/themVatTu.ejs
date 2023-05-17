@@ -112,7 +112,6 @@
             crossorigin="anonymous"></script>
         <script>
             var ListChungLoai = <%- JSON.stringify(ListChungLoai) %>;
-            console.log(ListChungLoai);
             chungLoaiVatTu = document.getElementById("chungLoaiVatTu");
             LoaiVatTu = document.getElementById("LoaiVatTu");
             function getLoai (){
@@ -124,7 +123,11 @@
                         break;
                     }
                 }
-                console.log(LoaiVTs);
+                var child = LoaiVatTu.lastElementChild; 
+                while (child) {
+                    LoaiVatTu.removeChild(child);
+                    child = LoaiVatTu.lastElementChild;
+                }
                 for(i=0;i<LoaiVTs.length;i++)
                 {
                     var opt = document.createElement('option');
