@@ -24,8 +24,12 @@ const BaoCaoThongKe = sequelize.define(
 );
 BaoCaoThongKe.belongsTo(LoaiBaoCaoThongKe,{
     foreignKey:"loaiBaoCaoThongKeId",
+    as: "LoaiBaoCaoThongKe",
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
+});
+LoaiBaoCaoThongKe.hasMany(BaoCaoThongKe,{
+    as:"BaoCaoThongKe"
 })
 BaoCaoThongKe.belongsTo(NhanVien,{
     foreignKey:"NhanVienId",
