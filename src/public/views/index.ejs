@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../css/bootstrap.min.css" />
         <link rel="stylesheet" href="../css/styles.css" />
-        <title>Index</title>
+        <title>Trang chủ</title>
     </head>
     <body>
         <div class="container">
@@ -20,16 +20,19 @@
                         </button>
                     </div>
                     <div class="col-md-8 d-flex justify-content-end ">
-                        <form class="form-inline my-2 my-lg-0">
+                        <form method="post" action="/search"  class="form-inline my-2 my-lg-0">
                             <input
                                 class="form-control mr-sm-2 border border-secondary"
                                 type="text"
-                                placeholder="Search" />
+                                onchange="searchVT()"
+                                placeholder="Search"
+                                name="value" />
                             <button
-                                class="btn btn-success my-2 my-sm-0"
+                                class="btn btn-success  my-2 my-sm-0"
                                 type="submit"
-                                ><i class="fas fa-search fa-lg"></i
-                            ></button>
+                                id="btn_search"
+                                ><i class="fas fa-search fa-lg"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -64,7 +67,7 @@
                                         <td>
                                             <button class="btn btn-warning"><a href="/updateVatTu/<%-vatTu.mVT %>">Chỉnh sửa</a></button>
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-id= <%-vatTu.mVT %> >Xóa</button>
-                                            <button class="btn btn-primary">Xem</button>
+                                            <button class="btn btn-primary"><a href="/nhapKho/<%-vatTu.mVT %>">Xem</a></button>
                                         </td>
                                     </tr>
                             <%
@@ -107,13 +110,19 @@
         <script>
             document.addEventListener('DOMContentLoaded',function (event){
                 var deleteVT = document.getElementById('deleteVT')
-                console.log(deleteVT);
                 $('#exampleModal').on('show.bs.modal', function (event) {
                     var button = $(event.relatedTarget) 
                     var idVT = button.data('id')
                     deleteVT.setAttribute("href", `/deleteVatTu/${idVT}`);
                 });
+                
             })
+            var text_search=  document.getElementById("text_search")
+            function searchVT() {
+                    var value = text_search.value
+                    console.log(value);
+                    document.getElementById("search").setAttribute("href",`/search/${value}`)
+                }
         </script>
     </body>
 </html>

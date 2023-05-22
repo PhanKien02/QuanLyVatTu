@@ -11,6 +11,8 @@ import HoaDon from "./models/HoaDon"
 import BaoCao from "./models/BaoCaoThongKe"
 import PhieuNhapKho from "./models/PhieuNhapKho"
 import PhieuXuatKho from "./models/PhieuXuatKho";
+import ChiTietPhieuNhapKho from "./models/ChiTietPhieuNhapKho"
+import ChiTietPhieuXuatKho from "./models/ChiTietPhieuXuatKho"
 import QuanHuyen from "./models/QuanHuyen";
 require('dotenv').config();
 const app = express();

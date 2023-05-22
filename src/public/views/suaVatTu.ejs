@@ -15,11 +15,11 @@
                 <h1>Sửa vật tư</h1>
                 <hr/>
                 <div class="d-flex justify-content-center">
-                    <form method="post" action="/updateVatTu" class="form-addVatTu d-flex flex-column">
+                    <form method="post" action="/updateVatTu/<%= VTUpdate.mVT %>" class="form-addVatTu d-flex flex-column">
                         <div class="group d-flex justify-content-between">
                             <div class="form-group">
                                 <label for="maVatTu">Mã vật Tư</label>
-                                <input required type="text" class="form-control" name="maVatTu" id="maVatTu" placeholder="Nhập mã vật tư" value="<%= VTUpdate.mVT %>">
+                                <input required type="text" class="form-control" disabled name="maVatTu" id="maVatTu" placeholder="Nhập mã vật tư" value="<%= VTUpdate.mVT %>">
                             </div>
                             <div class="form-group">
                                 <label for="tenVatTu">Tên vật Tư</label>
@@ -33,8 +33,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="donvitinh">Đơn vị tính</label>
-                                <select required type="text" class="form-control" name="donViTinh" id="donvitinh" placeholder="Nhập đơn vị tính">
-                                    <option value="<%= VTUpdate.donViTinh %>"><%= VTUpdate.donViTinh %></option>
+                                <select onchange="removeReload('reloadDVT')"  required type="text" class="form-control" name="donViTinh" id="donvitinh" placeholder="Nhập đơn vị tính">
+                                    <option id="reloadDVT" value="<%= VTUpdate.donViTinh %>"><%= VTUpdate.donViTinh %></option>
                                     <%
                                         DonViTinh.forEach((dvt) => {
                                             %>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="LoaiVatTu"> loại vật tư</label>
-                                <select required name="loaiVattu" onchange="removeReload()"  class="form-control" id="LoaiVatTu" >
+                                <select required name="loaiVattu" onchange="removeReload('reloadLoaiVT')"  class="form-control" id="LoaiVatTu" >
                                     <option id="reloadLoaiVT" value="<%= VTUpdate.LoaiVatTu.mLVT %>"> <%= VTUpdate.LoaiVatTu.tenLoaiVatTu %> </option>
                                 </select>
 
@@ -78,19 +78,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="khuvuc"> Khu Vực</label>
-                                <select required name="khuvuc"  class="form-control" id="LoaiVatTu" >
-                                    <option value="<%= VTUpdate.KhuVuc.mkhu %>"><%-VTUpdate.KhuVuc.tenKhuVuc %></option>
+                                <select onchange="removeReload('reloadKV')"  required name="khuvuc"  class="form-control" id="LoaiVatTu" >
+                                    <option id="reloadKV" value="<%= VTUpdate.KhuVuc.mkhu %>"><%=VTUpdate.KhuVuc.tenKhuVuc %></option>
                                     <%
                                         ListKhuVuc.forEach( (khuvuc) => {
                                         %>
-                                            <option value= <%= (khuvuc.mkhu) %> >
+                                            <option value="<%= (khuvuc.mkhu) %>"  >
                                                 <%= khuvuc.tenKhuVuc %>
                                             </option>
                                         <%
                                         })
                                     %>
                                 </select>
-
                             </div>
                         </div>
                         <hr>
@@ -111,11 +110,15 @@
             src="https://kit.fontawesome.com/0ec6e9d798.js"
             crossorigin="anonymous"></script>
         <script>
+            // lấy danh sách loại vật tư từ sv 
             var ListChungLoai = <%- JSON.stringify(ListChungLoai) %>;
+            // lấy vật tư cần update từ sv
             var VUpdate = <%- JSON.stringify(VTUpdate) %>;
             var vlChungLoai = document.getElementById("chungloaiVTopt");
             var LoaiVTs;
             var chungLoaiVatTu = document.getElementById("chungLoaiVatTu");
+            let reloadLVT =  document.getElementById("reloadLoaiVT");
+            let reloadDVT =  document.getElementById("reloadDVT");
             var LoaiVatTu = document.getElementById("LoaiVatTu");
             for(i =0 ;i < ListChungLoai.length;i++ ){
                     if(ListChungLoai[i].mCLVT == VUpdate.LoaiVatTu.mCLVT){
@@ -125,20 +128,20 @@
                         for(i=0;i<LoaiVTs.length;i++)
                         {
                             var opt = document.createElement('option');
-                            opt.value = LoaiVTs[i].mCLVT
+                            opt.value = LoaiVTs[i].mLVT
                             opt.innerHTML = LoaiVTs[i].tenLoaiVatTu;
                             LoaiVatTu.appendChild(opt);
                         }
                         break;
                     }
                 }
-            function removeReload(){
-                console.log("demo");
-               let reload =  document.getElementById("reloadLoaiVT");
-               if(reload)
-                    reload.remove()
-            else
-                return;
+                function removeReload(id){
+                    let reload =  document.getElementById(id);
+                    console.log(reload.value);
+                    if(reload)
+                            reload.remove()
+                    else
+                        return;
             }
             function getLoai (){
                 for(i =0 ;i < ListChungLoai.length;i++ ){
@@ -156,7 +159,7 @@
                 for(i=0;i<LoaiVTs.length;i++)
                 {
                     var opt = document.createElement('option');
-                    opt.value = LoaiVTs[i].mCLVT
+                    opt.value = LoaiVTs[i].mLVT
                     opt.innerHTML = LoaiVTs[i].tenLoaiVatTu;
                     LoaiVatTu.appendChild(opt);
                 }
