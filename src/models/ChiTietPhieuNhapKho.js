@@ -25,7 +25,7 @@ ChiTietPhieuNhapKho.belongsTo(PhieuNhapKho,{
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
 })
-ChiTietPhieuNhapKho.hasMany(VatTu,{
+ChiTietPhieuNhapKho.belongsTo(VatTu,{
     foreignKey: "mVT",
     as: "VatTu",
     onDelete: "RESTRICT",
