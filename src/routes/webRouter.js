@@ -13,6 +13,8 @@ const Webrouter = async(app) =>{
     Router.post("/search",VatTu.Search);
     Router.get("/nhapKho/:mVT=?",VatTu.xemNhapKho);
     Router.get("/xuatKho/:mVT=?",VatTu.xemXuatKho);
+    Router.get("/exportNhapKho/:mVT=?",VatTu.generatePdfNhapKho);
+    Router.get("/exportXuatKho/:mVT=?",VatTu.generatePdfXuatKho);
 
     return app.use("/",Router);
 }

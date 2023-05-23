@@ -95,7 +95,7 @@
                         </div>
                         <hr>
                         <div class="group d-flex justify-content-between">
-                            <div class="form-group">
+                            <div class="form-group back">
                                 <button type="submit" class="btn btn-muted"><a href="/">Quay lại</a></button>
                             </div>
                             <div class="form-group">
@@ -116,8 +116,15 @@
             console.log(ListChungLoai);
             chungLoaiVatTu = document.getElementById("chungLoaiVatTu");
             LoaiVatTu = document.getElementById("LoaiVatTu");
+            function removeReload(id){
+                    let reload =  document.getElementById(id);
+                    console.log(reload.value);
+                    if(reload)
+                            reload.remove()
+                    else
+                        return;
+            }
             function getLoai (){
-                let LoaiVTs = null;
                 for(i =0 ;i < ListChungLoai.length;i++ ){
                     if(ListChungLoai[i].mCLVT == chungLoaiVatTu.value){
                         console.log(ListChungLoai[i].mCLVT);
@@ -125,11 +132,15 @@
                         break;
                     }
                 }
-                console.log(LoaiVTs);
+                var child = LoaiVatTu.lastElementChild; 
+                while (child) {
+                    LoaiVatTu.removeChild(child);
+                    child = LoaiVatTu.lastElementChild;
+                }
                 for(i=0;i<LoaiVTs.length;i++)
                 {
                     var opt = document.createElement('option');
-                    opt.value = LoaiVTs[i].mCLVT
+                    opt.value = LoaiVTs[i].mLVT
                     opt.innerHTML = LoaiVTs[i].tenLoaiVatTu;
                     LoaiVatTu.appendChild(opt);
                 }
