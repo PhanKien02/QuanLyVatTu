@@ -164,14 +164,11 @@ const generatePdfNhapKho = async (req,res)=>{
         
     })
     const nhapKhos = await ChiTietPhieuNhapKho.findAll({
-        where: {
-            mVT : req.params.mVT,
-        }
-    },{
         include :[
             {
                 model: VatTu,
-                as : "VatTu"
+                as : "VatTu",
+                where: { mVT : req.params.mVT }
             },{
                 model : PhieuNhapKho,
                 as : "PhieuNhapKho",
@@ -205,17 +202,15 @@ const generatePdfXuatKho = async (req,res)=>{
         include :[
             {
                 model: VatTu,
-                as : "VatTu"
+                as : "VatTu",
+                where: { mVT : req.params.mVT }
             },{
                 model : PhieuXuatKho,
                 as : "PhieuXuatKho",
                 include: "NguoiXuat"
             }
         ]
-    },{where:{
-        mVT : req.params.mVT
-    }
-})
+    })
     const dataXuatNhap = xuatKhos.map(xuatKho =>{
             return {
                 NhanhVien: xuatKho.dataValues.PhieuXuatKho.dataValues.NguoiXuat.dataValues.tenNhanVien,
@@ -255,6 +250,10 @@ const generatePdf = async (data)=>{
         console.log("create error:",error);
     });
     const filepath = 'http://localhost:8081/export/' + filename;
+    await BaoCaoThongKe.create({
+        fileBaoCao: filepath,
+        tinhTrang: 0
+    })  
     return filepath
 }
 export default {
