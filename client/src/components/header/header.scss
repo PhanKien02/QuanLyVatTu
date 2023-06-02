@@ -1,0 +1,38 @@
+.header{
+    background-color: #16c5ec;
+    width: 85%;
+    height: 120px;
+    float: right;
+    align-items: center;
+    display: block;
+}
+.header-content{
+    align-items: center;
+    width: 100%;
+}
+.title a{
+    text-decoration: none;
+    color: #000;
+}
+.search-input{
+    margin-left: 100px;
+    width: 300px;
+}
+.user a{
+    text-decoration: none !important;
+}
+.user-icon{
+    border: 1px solid #000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 200px;
+}
+.user-icon .icon {
+    margin-top: 10px;
+}
+.user-name{
+    margin-left: 10px;
+    margin-top: 5px;
+    color: #000;
+}
