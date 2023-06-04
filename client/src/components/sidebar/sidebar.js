@@ -5,10 +5,9 @@ import logo from "../../assets/images/logo.png"
 import Routes from "../../common/data/router";
 import { Link} from "react-router-dom";
 const SideBar = () =>{
-    console.log(Routes);
     return (
         <div className="sidebar">
-        <img  src={logo} alt="logo " className="logo mt-2"/>
+        <Link to="/">   <img  src={logo} alt="logo " className="logo mt-2"/></Link>
             <ul>
                 {
                     Routes.map((Route,i=0)=>{

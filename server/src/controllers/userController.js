@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from "../models/User"
+import ApiResult from '../configs/resultApi'
 // * kiểm tra user có tồn tại trong db hay không
 const checkUser = async (userName)=>{
     try {
@@ -37,7 +38,7 @@ const newUser = async (req,res)=>{
     const check = await checkUser(user.userName);
     if(check)
         {
-            return res.status(400).json("user name ")
+            return res.status(500).json("user name ...")
         }
     else {
         const newpassword = await hashPassWord(user.password)
@@ -45,18 +46,13 @@ const newUser = async (req,res)=>{
             userName: user.userName ,
             password : newpassword}
             )
-        const User = {
-            message : "create user Success",
-            data : newUser
-        }
-        console.log(newUser);
-        return res.status(200).json(User)
+        const data = new ApiResult("create user Success",newUser) 
+        return res.status(200).json(data)
     }
 }
 const LoginUser = async (req,res)=>{
-    console.log("header: ",req.headers);
-    console.log("cookies: ",req.cookies);
-    const useLogin = await checkUser(req.body.userName);
+    console.log("cookies: ",typeof(req.body));
+    const useLogin = await checkUser(req.body.useName);
     if(useLogin){
         try {
             const checkpass = await comparePassword(req.body.password,useLogin.password)
@@ -66,22 +62,52 @@ const LoginUser = async (req,res)=>{
                     const newToken =jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), useId: useLogin.id }, process.env.PRIVATEKEY);
                     const User = {
                         user : useLogin,
-                        token : newToken
+                        token : newToken,
+                        message: "login success"
                     }
-                    return res.status(200).json(User);
+                    const data = new ApiResult("login success",User) 
+                    return res.status(200).json(data);
                 }
             else{
-                return res.json("username or Password is incorrect")
+                const User = {
+                    user : null,
+                    token : null,
+                    message: " Password is incorrect"
+                }
+                return res.json(User)
             }
         } catch (error) {
             console.log(error);
+            const User = {
+                user : null,
+                token : null,
+                message: "login faild"
+            }
+            return res.json(User)
         }
     }
     else{
-        return res.json("username or Password is incorrect")
+        const User = {
+            user : null,
+            token : null,
+            message: "username  is incorrect"
+        }
+        return res.json(User)
     }
+}
+const getAllUser =  async (req,res)=>{
+    await User.findAll().then((users)=>{
+        const  listUser = {
+            message: "getAll user",
+            data: users, 
+        }
+        return res.status(200).json(listUser)
+    });
+
+
 }
 export default {
     newUser,
-    LoginUser
+    LoginUser,
+    getAllUser
 }
