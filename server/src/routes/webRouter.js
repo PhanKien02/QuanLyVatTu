@@ -1,8 +1,9 @@
 import Express  from "express";
 import VatTu from "../controllers/vatTu.controller"
+
 const Router = Express.Router();
 
-const Webrouter = async(app) =>{
+const Webrouter = (app) =>{
 
     Router.get("/",VatTu.getVatTu)
     Router.get("/themVatTu",VatTu.getThemVatTu);

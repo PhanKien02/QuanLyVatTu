@@ -1,0 +1,35 @@
+.login{
+    background-color: rgb(116, 182, 240);
+    height: 400px;
+    width: 80%;
+    margin-left: 130px;
+    margin-top: 40px;
+    border-radius: 30px;
+}
+.forgot-password a{
+    text-decoration: none;
+    color: #fff;
+    margin-left: 100px;
+}
+form{
+    margin-right: 40px;
+}
+input {
+    margin-left: 20px;
+    border-radius: 10px;
+    border: 1px solid #d9d5d5;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    text-align: center;
+}
+
+.register a{
+    margin-left: 30px;
+}
+.register a:hover{
+    color: #fff;
+    text-decoration: none;
+}

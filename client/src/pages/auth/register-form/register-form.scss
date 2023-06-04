@@ -1,0 +1,32 @@
+.register{
+    background-color: #74b6f0;
+    height: 400px;
+    width: 80%;
+    margin-left: 130px;
+    margin-top: 39px;
+    border-radius: 30px;
+}
+.forgot-password a{
+    text-decoration: none;
+    color: #fff;
+    margin-left: 15px;
+}
+form {
+    margin-right: 40px;
+}
+label {
+    float: left;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    text-align: center;
+}
+input {
+    border-radius: 10px;
+    border: 1px solid #d9d5d5;
+    float: right;
+    margin-left: -60px;
+    margin-right: 80px;
+}
