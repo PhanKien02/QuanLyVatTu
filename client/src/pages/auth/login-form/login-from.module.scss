@@ -6,20 +6,20 @@
     margin-top: 40px;
     border-radius: 30px;
 }
-.forgot-password a{
+.forgot_password a{
     text-decoration: none;
     color: #fff;
     margin-left: 100px;
 }
-form{
+.form{
     margin-right: 40px;
 }
-input {
+.input {
     margin-left: 20px;
     border-radius: 10px;
     border: 1px solid #d9d5d5;
 }
-a{
+.forgot_password a{
     text-decoration: none;
     color: #fff;
     display: block;
@@ -28,6 +28,10 @@ a{
 
 .register a{
     margin-left: 30px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    text-align: center;
 }
 .register a:hover{
     color: #fff;

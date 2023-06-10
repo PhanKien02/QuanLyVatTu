@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import service from "./login.service";
-import "./login-from.scss";
+import styles from "./login-from.module.scss";
 const LoginForm = () => {
     const [userName,setUserName] = useState("")
     const [password,setPassword] = useState("")
@@ -23,25 +23,26 @@ const LoginForm = () => {
         login()
     };
     return (
-        <div className="login container">
+        <div className={`${styles.login} container`}>
             <h1 className="text-center text-white">Đăng nhập</h1>
-            <form onSubmit={handleLogin}>
+            <form className={`${styles.form}`} onSubmit={handleLogin}>
                 <div className="form-group row mt-5">
                     <label>
                         useName:
-                        <input type="text" value={userName} onChange={handleChangeUserName} />
+                        <input className={`${styles.input}`} type="text" value={userName} onChange={handleChangeUserName} />
                     </label>
                 </div>
                 <div className="form-group row mt-5">
                     <label>
                         password: 
                         <input
+                        className={`${styles.input}`}
                             type="password" value={password} onChange={handleChangePassword}
                         />
                     </label>
                 </div>
                 <div className="form-group row mt-4">
-                    <div className="d-flex justify-content-start forgot-password">
+                    <div className={`d-flex justify-content-start ${styles.forgot_password}`}>
                         <Link to="/">Quên mật khẩu</Link>
                     </div>
                 </div>
@@ -59,7 +60,9 @@ const LoginForm = () => {
                         />
                     </div>
                 </div>
-                <Link to="/auth/sign-up">Đăng kí tài khoản</Link>
+            <span className={`${styles.register}`}>
+            <Link to="/auth/sign-up">Đăng kí tài khoản</Link>
+            </span>
             </form>
         </div>
     );

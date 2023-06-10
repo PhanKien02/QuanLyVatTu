@@ -2,21 +2,21 @@ import React from "react"
 import Header from "../../components/header/header"
 import SideBar from "../../components/sidebar/sidebar"
 import { Outlet } from "react-router-dom"
-import "./home.scss"
+import style from "./home.module.scss"
 const Home = ()=>{
     return (
-        <>
-            <div className="header">
+        <div className={style.home}>
+            <div className={style.header}>
                 <Header/>
             </div>
 
-            <div className="sidebar">
+            <div className={style.sidebar}>
                 <SideBar/>
             </div>
-            <div className="content">
+            <div className={style.content}>
                 <Outlet/>
             </div>
-        </>
+        </div>
     )
 }
 export default Home
