@@ -3,6 +3,7 @@ import User from "../controllers/userController"
 import VatTu from "../controllers/vatuController";
 import ChungLoai from "../controllers/chungLoaiVatTuController";
 import KhuVuc from "../controllers/khuVucController";
+import LoaiVatTu from "../controllers/loaiVatTuController";
 const Router = Express.Router();
 
 const ApiRouter = (app)=>{
@@ -11,6 +12,7 @@ const ApiRouter = (app)=>{
     Router.get("/users",User.getAllUser)
     Router.get("/vatus",VatTu.getAllVatTu)
     Router.get("/chungLoais",ChungLoai.getALlLoaiVatTu)
+    Router.get("/loais",LoaiVatTu.getAllLoaiVatTu)
     Router.get("/khuvucs",KhuVuc.getAllKhuVuc)
     return app.use("/api",Router);
 }
