@@ -1,4 +1,5 @@
 const express = require('express');
+var morgan = require('morgan')
 import cors from 'cors';
 import bodyParser from "body-parser";
 import db from "./configs/connectdb"
@@ -18,6 +19,7 @@ import ChiTietPhieuXuatKho from "./models/ChiTietPhieuXuatKho"
 import QuanHuyen from "./models/QuanHuyen";
 require('dotenv').config();
 const app = express();
+app.use(morgan('dev'))
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.text())
