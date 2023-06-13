@@ -1,33 +1,52 @@
 import  React, { useEffect,useState }  from 'react';
 import service from './vatTu.service'
 import styles from "./vatuComponent.module.scss";
-import FormVatTu from '../addVatTu/FormVatTu';
+import FormVatTu from '../formVattu/FormVatTu';
+import ModalDelete from'../modalDeleteVattu/deleteVattu'
 const VatuComponent = ()=>{ 
 
-    const [vatus,setListVatu] = useState([])
-    const [displayForm,setdisplayForm] = useState(false)
-    const [FormData,setFormData] = useState(null)
+    const [vatus,setListVatu] = useState([]);
+    const [displayForm,setdisplayForm] = useState(false);
+    const [displayModalDelete,setdisplayModalDelete] = useState(false);
+    const [VattuDelete,setVattuDelete] = useState();
+    const [FormData,setFormData] = useState(null);
+    const [message,setMessage] = useState("");
     useEffect(()=>{
-        const fetchdata = async ()=>{
-            const dataVatTu= await service.getALlVatu() 
-                if(dataVatTu)
-                    setListVatu(dataVatTu.data);            
-        }
         fetchdata()
     },[])
+    const fetchdata = async ()=>{
+        const dataVatTu= await service.getALlVatu() 
+            if(dataVatTu)
+                setListVatu(dataVatTu.data);            
+    }
     const handelShowForm = (data)=>{
         setdisplayForm(true)
         setFormData(data)
     }
-    const handleClose = ()=>{
+    const handelCloseForm = (message)=>{
+        fetchdata()
+        setMessage(message)
         setdisplayForm(false)
         setFormData(null)
+    }
+    const handelShowModalDelete = (vattu) =>{
+        setdisplayModalDelete(true)  
+        setVattuDelete(vattu)
+    }
+    const handelCloseModalDelete = (message) =>{
+        fetchdata()
+        setMessage(message)
+        setdisplayModalDelete(false)  
+        setVattuDelete(null)
     }
     return (
         <div className='Vatu container'>
             <h1 className={`${styles.title}`}>Vật Tư</h1>
-            <div className="row d-flex justify-content-end mb-3">
-                <div className="col-md-5">
+            <div className="row d-flex justify-content-between mb-3">
+                <div className="col-md-6">
+                        <h5 className={`text-info mt-2`}>{message || null}</h5>
+                </div>
+                <div className="col-md-6">
                     <button className={`btn btn-success ${styles.add}`} onClick={()=>handelShowForm(null)}>
                         Thêm Vật tư
                     </button>
@@ -62,7 +81,7 @@ const VatuComponent = ()=>{
                                     <td>
                                         <button className={`btn btn-primary ${styles.action}`}>Xem</button>
                                         <button className={`btn btn-warning ${styles.action}`} onClick={()=>handelShowForm(vatu)} >Sửa</button>
-                                        <button className={`btn btn-danger ${styles.action}`}>Xóa</button>
+                                        <button className={`btn btn-danger ${styles.action}`} onClick={() =>handelShowModalDelete(vatu)} >Xóa</button>
                                     </td>
                                 </tr>
                             )
@@ -71,7 +90,8 @@ const VatuComponent = ()=>{
                 </tbody>  
             </table>
             </div>
-            {displayForm && <FormVatTu display={displayForm} closeForse={handleClose} Vattu = {FormData}/>}
+            {displayForm && <FormVatTu display={displayForm} closeForm={handelCloseForm} Vattu = {FormData}/>}
+            {displayModalDelete && <ModalDelete display = {displayModalDelete} closeModal = {handelCloseModalDelete} Vattu = {VattuDelete} />}
         </div>
     )
 }
