@@ -51,19 +51,16 @@ const newUser = async (req,res)=>{
     }
 }
 const LoginUser = async (req,res)=>{
-    console.log("cookies: ",typeof(req.body));
     const useLogin = await checkUser(req.body.useName);
     if(useLogin){
         try {
             const checkpass = await comparePassword(req.body.password,useLogin.password)
-            console.log("checkpass",checkpass);
             if(checkpass)
                 {
-                    const newToken =jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), useId: useLogin.id }, process.env.PRIVATEKEY);
+                    const newToken =jwt.sign({ useId: useLogin.id }, process.env.PRIVATEKEY, { expiresIn: '5s' });
                     const User = {
                         user : useLogin,
                         token : newToken,
-                        message: "login success"
                     }
                     const data = new ApiResult("login success",User) 
                     return res.status(200).json(data);
@@ -72,18 +69,18 @@ const LoginUser = async (req,res)=>{
                 const User = {
                     user : null,
                     token : null,
-                    message: " Password is incorrect"
                 }
-                return res.json(User)
+                const data = new ApiResult("Password is incorrect",User);
+                return res.status(401).json(data)
             }
         } catch (error) {
             console.log(error);
             const User = {
                 user : null,
                 token : null,
-                message: "login faild"
             }
-            return res.json(User)
+            const data = new ApiResult("login faild",User);
+            return res.status(401).json(data)
         }
     }
     else{
@@ -97,11 +94,11 @@ const LoginUser = async (req,res)=>{
 }
 const getAllUser =  async (req,res)=>{
     await User.findAll().then((users)=>{
-        const  listUser = {
-            message: "getAll user",
-            data: users, 
-        }
-        return res.status(200).json(listUser)
+        const data = new ApiResult("get all user success",users)
+        return res.status(200).json(data)
+    }).catch((err)=>{
+        const data = new ApiResult("get all user faile",err)
+        return res.status(500).json(data);
     });
 
 
