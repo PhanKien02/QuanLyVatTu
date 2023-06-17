@@ -12,7 +12,7 @@ const authen = async()=>{
     })
 }
 const creteTable = async()=>{
-    await sequelize.sync()
+    await sequelize.sync({alter: true})
 }
 module.exports= {
     sequelize,

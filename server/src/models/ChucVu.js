@@ -16,6 +16,6 @@ const ChucVu = sequelize.define(
         tableName: "ChucVu",
     }
 );
-ChucVu.sync();
+ChucVu.sync({alter:true});
 module.exports = ChucVu;
 

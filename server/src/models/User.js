@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../configs/connectdb").sequelize;
 import ChucVu from "./ChucVu";
+import NhanhVien from "./NhanVien";
 const User = sequelize.define(
     "User",
     {
@@ -21,6 +22,11 @@ const User = sequelize.define(
         updatedAt: "updateTimestamp",
     }
 );
-User.belongsToMany(ChucVu, { through: "DamNhiemChucvu" });
+User.belongsTo(ChucVu,{
+    foreignKey: "chucvuId",
+    as: "ChucVu",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+});
 User.sync();
 module.exports = User;

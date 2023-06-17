@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const KhuVuc = require("./KhuVuc");
 const XaPhuong = require("./XaPhuong");
 const CongViec = require("./CongViec");
+const User = require("./User");
 const sequelize = require("../configs/connectdb").sequelize;
 const NhanhVien = sequelize.define(
     "NhanhVien",
@@ -47,6 +48,12 @@ NhanhVien.belongsTo(KhuVuc,{
 NhanhVien.belongsTo(XaPhuong,{
     foreignKey: "mXP",
     as: "XaPhuong",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+})
+NhanhVien.belongsTo(User,{
+    foreignKey: "idUser",
+    as: "user",
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
 })
