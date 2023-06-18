@@ -10,7 +10,7 @@ const getAllUser = () =>{
 }
 const Login = async (useName,password)=>{
     try {
-        const log = await request.post("/api/login",{
+        const log = await request.post("login",{
             useName:useName,
             password:password
         })
