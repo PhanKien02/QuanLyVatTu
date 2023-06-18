@@ -61,10 +61,10 @@ const LoginUser = async (req,res)=>{
             const checkpass = await comparePassword(req.body.password,userLogin.password)
             if(checkpass)
                 {
-                    const newToken =generateToken(useLogin.id,'1m')
-                    const refreshToken =generateToken(useLogin.id,'1d')
+                    const newToken =generateToken(userLogin.id,'1m')
+                    const refreshToken =generateToken(userLogin.id,'1d')
                     const User = {
-                        user : useLogin,
+                        user : userLogin,
                         token : newToken,
                     }
                     const data = new ApiResult("login success",User) 
