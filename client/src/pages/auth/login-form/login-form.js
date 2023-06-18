@@ -1,11 +1,16 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import service from "./login.service";
+import request from '../../../utils/httpRequesr';
 import styles from "./login-from.module.scss";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../../store/context/authContext"
 const LoginForm = () => {
     const [userName,setUserName] = useState("")
     const [password,setPassword] = useState("")
     const [message,setMessage] = useState('')
+    const navigate = useNavigate();
+    const Auth = useContext(AuthContext)
     const handleChangeUserName = (event) =>{
         setUserName(event.target.value)
     }
@@ -16,9 +21,19 @@ const LoginForm = () => {
             event.preventDefault();
             const login= async ()=>{
             const response =  await service.Login(userName, password);
-            setMessage(response.data.message);
-            setPassword("")
-            setUserName("")
+            console.log(response);
+            if(response.data.user)
+                {
+                    request.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+                    Auth.setUser( response.data.user)
+                    Auth.setToken( response.data.token)
+                    navigate("/")
+                }
+            else{
+                setMessage(response.message);
+                setPassword("")
+                setUserName("")
+            }
         }   
         login()
     };
@@ -47,7 +62,7 @@ const LoginForm = () => {
                     </div>
                 </div>
                 <div className="row mt-2 d-flex justify-content-center">
-                    <div class="col-md-6">
+                    <div className="col-md-6">
                         <p className="text-center ml-4 text-danger">{message}</p>
                     </div>
                 </div>

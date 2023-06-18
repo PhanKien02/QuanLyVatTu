@@ -31,6 +31,10 @@ const comparePassword = (password,hashedPassword)=>{
         console.log(error);
     }
 }
+const generateToken= (data,exp) =>{
+    const token=  jwt.sign({ useId: data }, process.env.PRIVATEKEY, { expiresIn: exp });
+    return token
+}
 const newUser = async (req,res)=>{
     
     const user = req.body;
@@ -51,39 +55,39 @@ const newUser = async (req,res)=>{
     }
 }
 const LoginUser = async (req,res)=>{
-    console.log("cookies: ",typeof(req.body));
     const useLogin = await checkUser(req.body.useName);
     if(useLogin){
         try {
             const checkpass = await comparePassword(req.body.password,useLogin.password)
-            console.log("checkpass",checkpass);
             if(checkpass)
                 {
-                    const newToken =jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), useId: useLogin.id }, process.env.PRIVATEKEY);
+                    const newToken =generateToken(useLogin.id,'1m')
+                    const refreshToken =generateToken(useLogin.id,'1d')
                     const User = {
                         user : useLogin,
                         token : newToken,
-                        message: "login success"
                     }
                     const data = new ApiResult("login success",User) 
-                    return res.status(200).json(data);
+                    return res.cookie('jwt', refreshToken, { httpOnly: true, 
+                        sameSite: 'None', secure: true, 
+                        maxAge: 24 * 60 * 60 * 1000 }).status(200).json(data);
                 }
             else{
                 const User = {
                     user : null,
                     token : null,
-                    message: " Password is incorrect"
                 }
-                return res.json(User)
+                const data = new ApiResult("Password is incorrect",User);
+                return res.status(200).json(data)
             }
         } catch (error) {
             console.log(error);
             const User = {
                 user : null,
                 token : null,
-                message: "login faild"
             }
-            return res.json(User)
+            const data = new ApiResult("login faild",User);
+            return res.status(200).json(data)
         }
     }
     else{
@@ -92,16 +96,16 @@ const LoginUser = async (req,res)=>{
             token : null,
             message: "username  is incorrect"
         }
-        return res.json(User)
+        return res.status(200).json(User)
     }
 }
 const getAllUser =  async (req,res)=>{
     await User.findAll().then((users)=>{
-        const  listUser = {
-            message: "getAll user",
-            data: users, 
-        }
-        return res.status(200).json(listUser)
+        const data = new ApiResult("get all user success",users)
+        return res.status(200).json(data)
+    }).catch((err)=>{
+        const data = new ApiResult("get all user faile",err)
+        return res.status(500).json(data);
     });
 
 

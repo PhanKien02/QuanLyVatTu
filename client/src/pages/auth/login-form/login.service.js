@@ -14,10 +14,10 @@ const Login = async (useName,password)=>{
             useName:useName,
             password:password
         })
-        return log;
+        return log.data;
     } catch (error) {
         console.log(error);
-        return error;
+        return error
     }
 }
 export default {
