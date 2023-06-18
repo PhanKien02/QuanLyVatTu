@@ -18,25 +18,24 @@ const LoginForm = () => {
         setPassword(event.target.value)
     }
     const handleLogin = (event) => {
-            event.preventDefault();
-            const login= async ()=>{
-            const response =  await service.Login(userName, password);
-            console.log(response);
-            if(response.data.user)
-                {
-                    request.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-                    Auth.setUser( response.data.user)
-                    Auth.setToken( response.data.token)
-                    navigate("/")
-                }
-            else{
-                setMessage(response.message);
-                setPassword("")
-                setUserName("")
-            }
-        }   
+        event.preventDefault();        
         login()
     };
+    const login= async ()=>{
+        const response =  await service.Login(userName, password);
+        if(response.data.user)
+            {
+                request.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+                Auth.setUser( response.data.user)
+                Auth.setToken( response.data.token)
+                navigate("/")
+            }
+        else{
+            setMessage(response.message);
+            setPassword("")
+            setUserName("")
+        }
+    }   
     return (
         <div className={`${styles.login} container`}>
             <h1 className="text-center text-white">Đăng nhập</h1>

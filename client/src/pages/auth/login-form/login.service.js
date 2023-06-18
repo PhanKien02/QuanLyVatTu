@@ -8,11 +8,11 @@ const getAllUser = () =>{
     return err
 })
 }
-const Login = async (useName,password)=>{
+const Login = async (userName,password)=>{
     try {
         const log = await request.post("login",{
-            useName:useName,
-            password:password
+            userName : userName,
+            password : password,
         })
         return log.data;
     } catch (error) {

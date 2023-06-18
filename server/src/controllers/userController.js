@@ -55,10 +55,10 @@ const newUser = async (req,res)=>{
     }
 }
 const LoginUser = async (req,res)=>{
-    const useLogin = await checkUser(req.body.useName);
-    if(useLogin){
+    const userLogin = await checkUser(req.body.userName);
+    if(userLogin){
         try {
-            const checkpass = await comparePassword(req.body.password,useLogin.password)
+            const checkpass = await comparePassword(req.body.password,userLogin.password)
             if(checkpass)
                 {
                     const newToken =generateToken(useLogin.id,'1m')
