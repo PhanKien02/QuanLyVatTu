@@ -100,9 +100,9 @@ const handleChangeKhuVuc =(event)=>{
     console.log(khuVucValue);
 }
 
-const handleCloseForm = ()=>{
+const handleCloseForm = (message)=>{
     setdisplay(false)
-    props.closeForm()
+    props.closeForm(message)
 }
 const handleSubmit = (event)=>{
     event.preventDefault();
@@ -242,7 +242,7 @@ const handleCreate = async () =>{
                             <hr/>
                             <div className="group d-flex justify-content-end">
                                 <div className="form-group">
-                                    <button type="reset" className="btn btn-dark" onClick={handleCloseForm} >Hủy</button>
+                                    <button type="reset" className="btn btn-dark" onClick={()=>handleCloseForm()} >Hủy</button>
                                     <button type="submit" className={`btn btn-success ${styles.submit}`}>OK</button>
                                 </div>
                             </div>

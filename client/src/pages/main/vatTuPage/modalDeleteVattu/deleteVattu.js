@@ -50,7 +50,7 @@ const ModalDelete = (props) =>{
                 <h6>Bạn có muốn xóa vật tư {VatuDelete ? VatuDelete.tenVatTu : undefined}  ko</h6>
                 <hr/>
                 <div className='d-flex justify-content-end mt-5'>
-                    <button type="button" onClick={handelCloseModal} name="huy" id="huy" className="btn btn-dark btn-block text-center">Hủy</button>
+                    <button type="button" onClick={()=>handelCloseModal("")} name="huy" id="huy" className="btn btn-dark btn-block text-center">Hủy</button>
                     <button type="button" name="success" id="success" className={`btn btn-success btn-block text-center ${styles.action}`} onClick={handelDelete} >OK</button>
                 </div>
             </Modal>
