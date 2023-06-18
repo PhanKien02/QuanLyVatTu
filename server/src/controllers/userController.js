@@ -97,9 +97,8 @@ const LoginUser = async (req,res)=>{
         const User = {
             user : null,
             token : null,
-            message: "username  is incorrect"
         }
-        return res.status(200).json(User)
+        return res.status(200).json(new ApiResult("username  is incorrect",User))
     }
 }
 const getAllUser =  async (req,res)=>{
