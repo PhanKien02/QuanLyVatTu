@@ -48,7 +48,10 @@ const newUser = async (req,res)=>{
         const newpassword = await hashPassWord(user.password)
         const newUser = await User.create({
             userName: user.userName ,
-            password : newpassword}
+            password : newpassword,
+            chucvuId : user.role_id
+            
+        }
             )
         const data = new ApiResult("create user Success",newUser) 
         return res.status(200).json(data)
