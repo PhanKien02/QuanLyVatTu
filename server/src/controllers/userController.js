@@ -5,7 +5,7 @@ import ApiResult from '../configs/resultApi'
 // * kiểm tra user có tồn tại trong db hay không
 const checkUser = async (userName)=>{
     try {
-        const UserCheck = await User.findOne({where : {userName : userName} ,include:"NhanVien"})
+        const UserCheck = await User.findOne({where : {userName : userName, active:true} ,include:"NhanVien"})
         if(UserCheck)
             return UserCheck;
         else
