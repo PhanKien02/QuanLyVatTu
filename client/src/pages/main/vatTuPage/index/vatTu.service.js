@@ -1,4 +1,4 @@
-import request from "../../../../utils/httpRequesr"
+import request from "../../../../configs/httpRequesr"
 
 const getALlVatu =async () =>{
     try {
@@ -8,7 +8,14 @@ const getALlVatu =async () =>{
         console.log(error);
     }
 };
-
+const SearchVatu =async (tenVatTu) =>{
+    try {
+        const res = await request.get(`Searchvattu?tenVatTu=${tenVatTu}`);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
 export default {
-    getALlVatu
+    getALlVatu,SearchVatu
 }

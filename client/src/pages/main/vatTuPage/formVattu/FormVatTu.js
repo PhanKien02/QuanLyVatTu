@@ -156,11 +156,11 @@ const handleCreate = async () =>{
                 shouldCloseOnOverlayClick={true}
                 >
                 <h2>{title}</h2>
-                <form className={`${styles.form_addVatTu}  d-flex flex-column`} onSubmit={handleSubmit}>
+                <form className={`${styles.form}  d-flex flex-column`} onSubmit={handleSubmit}>
                             <div className="group d-flex justify-content-between">
                                 <div className={`form-group ${styles.group} `}>
                                     <label htmlFor="maVatTu">Mã vật Tư</label>
-                                    <input value={maVtValue} onChange={handleChangeMaVT} disabled={maVtValue?true:false }  required type="text" className="form-control" name="maVatTu" id="maVatTu" placeholder="Nhập mã vật tư"/>
+                                    <input value={maVtValue} onChange={handleChangeMaVT} disabled={props.Vattu?true:false }  required type="text" className="form-control" name="maVatTu" id="maVatTu" placeholder="Nhập mã vật tư"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="tenVatTu">Tên vật Tư</label>

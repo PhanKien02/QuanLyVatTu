@@ -1,4 +1,4 @@
-import request from "../../../utils/httpRequesr";
+import request from "../../../configs/httpRequesr";
 
 const signUp = (useName,password)=>{
     request.get("/api/new-user",{

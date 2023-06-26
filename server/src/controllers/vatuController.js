@@ -1,4 +1,5 @@
 import VatTu  from "../models/VatTu";
+import { Op } from "sequelize";
 import ApiResult from "../configs/resultApi"
 const getAllVatTu = async (req,res)=>{
     await VatTu.findAll({include:["LoaiVatTu","KhuVuc"]}).then(vatTus =>{
@@ -48,7 +49,6 @@ const updateVattu = async (req,res) =>{
         const data = new ApiResult("cập nhật vật tư thành công",Vattu);
         return res.status(200).json(data);
     } catch (error) {
-        // console.log(error);
         const data = new ApiResult("thêm vật tư thất bại",null);
         return res.status(200).json(data);
     }
@@ -64,6 +64,22 @@ const deleteVattu = async (req,res) =>{
         return res.status(500).json(data);
     }
 }
+const SearchVatTu = async(req,res) =>{
+    if(req.query.tenVatTu != ""){
+        await VatTu.findAndCountAll({where:{
+            tenVatTu : { [Op.like] : `%${req.query.tenVatTu}%`}
+        },
+        include:["LoaiVatTu","KhuVuc"],
+    }).then(vatTus =>{
+            return  res.status(200).json(new ApiResult("Search Vat Tu Success",vatTus.rows));
+        }).catch(()=>{
+            return  res.status(500).json(new ApiResult("Search Vat Tu faild",[]));
+    })
+}
+    else{
+        return  res.status(500).json(new ApiResult("Vui long nhap thong tin",[]));
+    }
+}
 export default {
-    getAllVatTu,createVatTu,updateVattu,deleteVattu
+    getAllVatTu,createVatTu,updateVattu,deleteVattu,SearchVatTu
 }

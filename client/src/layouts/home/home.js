@@ -6,7 +6,7 @@ import style from "./home.module.scss"
 const Home = ()=>{
     return (
         <div className={style.home}>
-            <div className={style.header}>
+            <div className={`bg-info ${style.header}`}>
                 <Header/>
             </div>
 

@@ -21,7 +21,7 @@ const ModalDelete = (props) =>{
     useEffect(()=>{
         setdisplay(props.display)
         setVattuDelete(props.Vattu)
-    },[])
+    },[props])
     const handelCloseModal = (message)=>{
         setdisplay(false)
         props.closeModal(message)
@@ -35,7 +35,7 @@ const ModalDelete = (props) =>{
         })
         .catch(error=>{
             console.log(error);
-            handelCloseModal("Không thể xóa vật tư vì đã được sử dụng")
+            handelCloseModal("Không thể xóa vật tư")
         })     
     }
     console.log(VatuDelete);

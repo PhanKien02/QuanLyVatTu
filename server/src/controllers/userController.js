@@ -5,7 +5,7 @@ import ApiResult from '../configs/resultApi'
 // * kiểm tra user có tồn tại trong db hay không
 const checkUser = async (userName)=>{
     try {
-        const UserCheck = await User.findOne({where : {userName : userName}})
+        const UserCheck = await User.findOne({where : {userName : userName} ,include:"NhanVien"})
         if(UserCheck)
             return UserCheck;
         else
@@ -49,8 +49,9 @@ const newUser = async (req,res)=>{
         const newUser = await User.create({
             userName: user.userName ,
             password : newpassword,
-            chucvuId : user.role_id
-            
+            chucvuId : user.role_id,
+            nhanvienId: user.nhanvienId,
+            active : true      
         }
             )
         const data = new ApiResult("create user Success",newUser) 
@@ -86,8 +87,8 @@ const LoginUser = async (req,res)=>{
         } catch (error) {
             console.log(error);
             const User = {
-                user : null,
-                token : null,
+                user : {},
+                token : "",
             }
             const data = new ApiResult("login faild",User);
             return res.status(200).json(data)
@@ -95,22 +96,21 @@ const LoginUser = async (req,res)=>{
     }
     else{
         const User = {
-            user : null,
-            token : null,
+            user : {},
+            token : "",
         }
         return res.status(200).json(new ApiResult("username  is incorrect",User))
     }
 }
 const getAllUser =  async (req,res)=>{
-    await User.findAll().then((users)=>{
+    await User.findAll({include :"NhanVien"}).then((users)=>{
         const data = new ApiResult("get all user success",users)
         return res.status(200).json(data)
     }).catch((err)=>{
-        const data = new ApiResult("get all user faile",err)
+        console.log(err);
+        const data = new ApiResult("get all user faile",[])
         return res.status(500).json(data);
     });
-
-
 }
 export default {
     newUser,

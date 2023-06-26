@@ -1,4 +1,4 @@
-import request from "../../../../utils/httpRequesr"
+import request from "../../../../configs/httpRequesr"
 const getALLChungLoai = async () =>{
     try {
         const res =await request.get("chungLoais");

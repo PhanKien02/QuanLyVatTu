@@ -22,8 +22,9 @@ const Register = ()=>{
                 <form className={`${styles.form}`}>
                     <div className="form-group row mt-4">
                         <label className={`${styles.label}`}>
-                                useName: 
+                                use Name: 
                                 <input
+                                    className={`${styles.input}`}
                                     type="text" onChange={handleChangeUseName}
                                 />
                         </label>

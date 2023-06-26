@@ -1,4 +1,4 @@
-import request from "../../../utils/httpRequesr"
+import request from "../../../configs/httpRequesr"
 
 const getAllUser = () =>{
     request.get("/api/users").then(response =>{

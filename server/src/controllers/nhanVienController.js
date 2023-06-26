@@ -2,32 +2,43 @@ import ApiResult from "../configs/resultApi";
 import NhanhVien from "../models/NhanVien";
 const addNhanVien = async (req,res) =>{
     const newUser = req.body;
-    const user = {
-        userName: newUser.userName ,
-        password : newUser.password,
-        chucvuId : newUser.role_id
-    }
     try {
-        await NhanhVien.create({
+        const nhanVien =   await NhanhVien.create({
             tenNhanVien: newUser.tenNhanVien,
+            email :newUser.email,
             ngaySinh : newUser.ngaySinh,
+            soDienThoai: newUser.soDienThoai,
             gioiTinh : newUser.gioiTinh,
             mKV : newUser.mKV,
-            idUser : newUser.idUser,
+            userId : newUser.idUser,
+            avatar : newUser.avatar,
+            active : 1
         })
-        const data = {
-            nhanhVien : NhanhVien
-        }
-        return res.status(200).json(new ApiResult("create Nhân viên success",data))
+        return res.status(200).json(new ApiResult("create Nhân viên success",nhanVien))
     } catch (error) {
         console.log(error);
-        const data = {
-            NhanhVien : null 
-        }
-        return res.status(500).json(new ApiResult("add Nhân Viên faile",data))
+        return res.status(200).json(new ApiResult("add Nhân Viên faile",null))
     }
     
 } 
+const getALlNhanVien = async (req,res) =>{
+    await NhanhVien.findAll({include:["KhuVuc","XaPhuong","User"]}).then(nhanviens =>{
+        console.log(nhanviens);
+        return res.status(200).json(new ApiResult("get all nhanvien success",nhanviens))
+    }).catch(err=>{
+        console.log(err);
+        return res.json(200).json(new ApiResult("get all nhan vien faild", []))
+    })
+}
+const getNhanVienById = async (req,res) =>{
+    await NhanhVien.findByPk(req.query.id,{include:["KhuVuc","XaPhuong","User"]}).then(nhanvien =>{
+        console.log(nhanvien);
+        return res.status(200).json(new ApiResult("get nhanvien by Id success",nhanvien))
+    }).catch(err=>{
+        console.log(err);
+        return res.json(200).json(new ApiResult("get nhanvien by Id faild", []))
+    })
+}
 export default {
-    addNhanVien
+    addNhanVien,getALlNhanVien,getNhanVienById
 }

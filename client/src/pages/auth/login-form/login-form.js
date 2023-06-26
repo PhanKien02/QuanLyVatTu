@@ -1,16 +1,17 @@
-import { React, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { React, useState } from "react";
+import {useDispatch} from "react-redux"
+import { Link,NavLink } from "react-router-dom";
 import service from "./login.service";
-import request from '../../../utils/httpRequesr';
+import request from '../../../configs/httpRequesr';
 import styles from "./login-from.module.scss";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../../store/context/authContext"
+import {action } from "../../reducer/nhanVienSlide/userSlide"
 const LoginForm = () => {
+    const dispatch = useDispatch()
     const [userName,setUserName] = useState("")
     const [password,setPassword] = useState("")
     const [message,setMessage] = useState('')
     const navigate = useNavigate();
-    const Auth = useContext(AuthContext)
     const handleChangeUserName = (event) =>{
         setUserName(event.target.value)
     }
@@ -23,15 +24,23 @@ const LoginForm = () => {
     };
     const login= async ()=>{
         const response =  await service.Login(userName, password);
-        if(response.data.user)
+        try {
+            if(response.data.user)
             {
+                const user= response.data.user;
+                const token= response.data.token;
                 request.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-                Auth.setUser( response.data.user)
-                Auth.setToken( response.data.token)
+                dispatch(action.LOG_IN({user : user, token :token }))
                 navigate("/")
             }
         else{
             setMessage(response.message);
+            setPassword("")
+            setUserName("")
+        }
+        } catch (error) {
+            console.log(error);
+            setMessage("Không thể đăng nhập");
             setPassword("")
             setUserName("")
         }
@@ -75,7 +84,7 @@ const LoginForm = () => {
                     </div>
                 </div>
             <span className={`${styles.register}`}>
-            <Link to="/auth/sign-up">Đăng kí tài khoản</Link>
+            <NavLink to="/auth/register">Đăng kí tài khoản</NavLink>
             </span>
             </form>
         </div>

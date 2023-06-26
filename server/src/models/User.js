@@ -3,30 +3,42 @@ const sequelize = require("../configs/connectdb").sequelize;
 import ChucVu from "./ChucVu";
 import NhanhVien from "./NhanVien";
 const User = sequelize.define(
-    "User",
-    {
-        id: {
-            type: DataTypes.BIGINT,
-            allowNull: false,
-            autoIncrement: true,
-            primaryKey: true,
+        "User",
+        {
+            id: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true,
+            },
+            userName: { type: DataTypes.STRING, allowNull: false },
+            password: { type: DataTypes.STRING, allowNull: false },
+            active: { type: DataTypes.BOOLEAN, allowNull: true },
         },
-        userName: { type: DataTypes.STRING, allowNull: false },
-        password: { type: DataTypes.STRING, allowNull: false },
-        active: { type: DataTypes.BOOLEAN, allowNull: true },
-    },
-    {
-        freezeTableName: true,
-        tableName: "users",
-        createdAt: "createTimestamp",
-        updatedAt: "updateTimestamp",
-    }
-);
+        {
+            freezeTableName: true,
+            tableName: "users",
+            createdAt: "createTimestamp",
+            updatedAt: "updateTimestamp",
+        }
+    );
 User.belongsTo(ChucVu,{
     foreignKey: "chucvuId",
     as: "ChucVu",
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
 });
+User.belongsTo(NhanhVien,{
+    foreignKey:"nhanvienId",
+    as : "NhanVien",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+})
+NhanhVien.hasMany(User,{
+    as :"User",
+    foreignKey:"nhanvienId",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+})
 User.sync();
 module.exports = User;
