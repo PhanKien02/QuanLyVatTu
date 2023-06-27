@@ -5,12 +5,12 @@ const sequelize = new Sequelize(
     process.env.DATABASE_USER,
     process.env.DATABASE_PASSWORD,
     {
-    host: 'localhost',
+    host: process.env.DATABASE_HOST,
     dialect: 'mysql',
     logging: false
 });
 const authen = async()=>{
-    console.log(process.env.DATABASE_HOST );
+    console.log(process.env.DATABASE_HOST);
     sequelize.authenticate().then(()=>{
         console.log("connect database success");
     }).catch((error)=>{
