@@ -22,9 +22,9 @@ const LoginForm = () => {
         event.preventDefault();        
         login()
     };
-    const login= async ()=>{
-        const response =  await service.Login(userName, password);
-        try {
+    const login= ()=>{
+        service.Login(userName, password).then((response)=>{
+            console.log(response);
             if(response.data.user)
             {
                 const user= response.data.user;
@@ -33,18 +33,18 @@ const LoginForm = () => {
                 dispatch(action.LOG_IN({user : user, token :token }))
                 navigate("/")
             }
-        else{
-            setMessage(response.message);
-            setPassword("")
-            setUserName("")
-        }
-        } catch (error) {
+            else{
+                setMessage(response.message);
+                setPassword("")
+                setUserName("")
+            }
+        }).catch(error=>{
             console.log(error);
             setMessage("Không thể đăng nhập");
             setPassword("")
             setUserName("")
-        }
-    }   
+        })
+    }
     return (
         <div className={`${styles.login} container`}>
             <h1 className="text-center text-white">Đăng nhập</h1>
