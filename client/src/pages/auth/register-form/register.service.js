@@ -5,7 +5,7 @@ const signUp = (useName,password)=>{
         useName:useName,
         password:password
     }).then(res=>{
-        console.log(res);
+        return res.data
     }).catch(err=>{
         console.log(err);
     })

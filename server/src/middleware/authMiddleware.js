@@ -3,7 +3,6 @@ import ApiResult from "../configs/resultApi";
 
 const auth = (req,res,next)=>{
     const token = req.headers.authorization
-    console.log(token);
     if(token)
     {
             const mytoken = token.split(" ")[1]

@@ -24,7 +24,6 @@ const LoginForm = () => {
     };
     const login= ()=>{
         service.Login(userName, password).then((response)=>{
-            console.log(response);
             if(response.data.user)
             {
                 const user= response.data.user;

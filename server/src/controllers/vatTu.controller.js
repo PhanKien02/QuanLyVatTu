@@ -57,9 +57,7 @@ const getSuaVT =async(req,res)=>{
 }
 // chỉnh sửa vật tư
 const suaVatTu = async (req,res)=>{
-    console.log(req.params);
     const updateVT= req.body;
-    console.log(updateVT);
     await VatTu.update({
         tenVatTu: updateVT.tenVatTu,
         donViTinh: updateVT.donViTinh,
@@ -81,7 +79,6 @@ const suaVatTu = async (req,res)=>{
 }
 // xóa vật tư
 const XoaVatTu = async(req,res) =>{
-    console.log(req.params);
     await VatTu.destroy({
         where:{
             mVT: req.params.mVT
@@ -101,7 +98,6 @@ const Search = async(req,res) =>{
         },
         include:["LoaiVatTu","KhuVuc"],
     }).then(vatTus =>{
-        console.log(vatTus);
             return  res.render("index.ejs",{vatTus:vatTus.rows})
         }).catch(()=>{return  res.render("index.ejs",{vatTus:[]})});
         

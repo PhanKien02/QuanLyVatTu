@@ -35,7 +35,6 @@ const updateVattu = async (payload) =>{
 const createVattu = async (payload)=>{
     try {
         const res = await request.post("createvattu",payload)
-        console.log(res);
         return res.data
     } catch (error) {
         console.log(error);
