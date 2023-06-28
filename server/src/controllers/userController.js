@@ -14,6 +14,21 @@ const checkUser = async (userName)=>{
         console.log(error);
     }
 }
+const findUser= async (userName)=>{
+    try {
+        const user = await User.findOne(
+            {   attributes:["userName","active"],
+                where : {userName : userName, active:true},
+                include:"NhanVien",              
+            })
+        if(user)
+            return user;
+        else
+            return null;
+    } catch (error) {
+        console.log(error);
+    }
+}
 const hashPassWord = (password)=>{
     const saltRounds = 10;
     try {
@@ -59,16 +74,18 @@ const newUser = async (req,res)=>{
     }
 }
 const LoginUser = async (req,res)=>{
-    const userLogin = await checkUser(req.body.userName);
-    if(userLogin){
+    const check = await checkUser(req.body.userName);
+    if(check){
         try {
-            const checkpass = await comparePassword(req.body.password,userLogin.password)
+            const login = await findUser(req.body.userName)
+            console.log(login);
+            const checkpass = await comparePassword(req.body.password,check.password)
             if(checkpass)
                 {
-                    const newToken =generateToken(userLogin.id,'1m')
-                    const refreshToken =generateToken(userLogin.id,'1d')
+                    const newToken =generateToken(login.id,'1m')
+                    const refreshToken =generateToken(login.id,'1d')
                     const User = {
-                        user : userLogin,
+                        user : login,
                         token : newToken,
                     }
                     const data = new ApiResult("login success",User) 
@@ -82,7 +99,7 @@ const LoginUser = async (req,res)=>{
                     token : null,
                 }
                 const data = new ApiResult("Password is incorrect",User);
-                return res.status(200).json(data)
+                return res.status(500).json(data)
             }
         } catch (error) {
             console.log(error);
@@ -91,7 +108,7 @@ const LoginUser = async (req,res)=>{
                 token : "",
             }
             const data = new ApiResult("login faild",User);
-            return res.status(200).json(data)
+            return res.status(500).json(data)
         }
     }
     else{
@@ -99,7 +116,7 @@ const LoginUser = async (req,res)=>{
             user : {},
             token : "",
         }
-        return res.status(200).json(new ApiResult("username  is incorrect",User))
+        return res.status(500).json(new ApiResult("username  is incorrect",User))
     }
 }
 const getAllUser =  async (req,res)=>{

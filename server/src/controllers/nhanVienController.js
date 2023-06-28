@@ -1,5 +1,6 @@
 import ApiResult from "../configs/resultApi";
 import NhanhVien from "../models/NhanVien";
+import User from "../models/User";
 const addNhanVien = async (req,res) =>{
     const newUser = req.body;
     try {
@@ -31,12 +32,20 @@ const getALlNhanVien = async (req,res) =>{
     })
 }
 const getNhanVienById = async (req,res) =>{
-    await NhanhVien.findByPk(req.query.id,{include:["KhuVuc","XaPhuong","User"]}).then(nhanvien =>{
-        console.log(nhanvien);
+    await NhanhVien.findByPk(req.query.id,{
+        include:[
+        {
+            model: User,
+            as:"User",
+            attributes:["userName","active"],
+           include :["ChucVu"]
+        },"KhuVuc","XaPhuong"]
+
+    }).then(nhanvien =>{
         return res.status(200).json(new ApiResult("get nhanvien by Id success",nhanvien))
     }).catch(err=>{
         console.log(err);
-        return res.json(200).json(new ApiResult("get nhanvien by Id faild", []))
+        return res.status(200).json(new ApiResult("get nhanvien by Id faild", []))
     })
 }
 export default {
