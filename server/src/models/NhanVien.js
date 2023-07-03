@@ -33,9 +33,6 @@ const NhanhVien = sequelize.define(
         avatar :{
             type : DataTypes.STRING,
             allowNull: true,
-            validate :{
-                isUrl: true
-            }
         },
         active: { type: DataTypes.BOOLEAN, allowNull: true },
     },

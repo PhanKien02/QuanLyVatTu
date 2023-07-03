@@ -22,9 +22,9 @@ const LoginForm = () => {
         event.preventDefault();        
         login()
     };
-    const login= ()=>{
-        service.Login(userName, password).then((response)=>{
-            console.log(response);
+    const login= async ()=>{
+        const response =  await service.Login(userName, password);
+        try {
             if(response.data.user)
             {
                 const user= response.data.user;

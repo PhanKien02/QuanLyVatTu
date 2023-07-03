@@ -2,15 +2,13 @@ import  React, { useEffect,useState }  from 'react';
 import styles from "./nhanVienComponent.module.scss";
 import formatDateToClient from "../../../../configs/formatDate";
 import FormNhanVien from '../FormNhanVien/formNhanVien';
-import {getALlNhanVIen} from "../../../reducer/nhanVienSlide/nhanVienSlide"
+import {getALlNhanVIen,getNhanVIenById} from "../../../reducer/nhanVienSlide/nhanVienSlide"
 import { useDispatch,useSelector } from 'react-redux';
 import {  useNavigate } from 'react-router-dom';
 const NhanVienComponent = ()=>{ 
     const dispatch = useDispatch();  
     const nhanviens = useSelector(state => state.nhanvien.entities)
     const [displayForm,setdisplayForm] = useState(false);
-    const [displayModalDelete,setdisplayModalDelete] = useState(false);
-    const [VattuDelete,setVattuDelete] = useState();
     const [FormData,setFormData] = useState(null);
     const [message,setMessage] = useState("");
     const navigate = useNavigate()
@@ -22,7 +20,8 @@ const NhanVienComponent = ()=>{
         setFormData(data)
     }
     const handelXemThongTin= (id)=>{
-        navigate(`/user/${id}`)
+        dispatch(getNhanVIenById(id))
+        navigate(`/user/thong-tin`)
     }
     const handelCloseForm = (message)=>{
         dispatch(getALlNhanVIen())
@@ -30,16 +29,7 @@ const NhanVienComponent = ()=>{
         setdisplayForm(false)
         setFormData(null)
     }
-    const handelShowModalDelete = (vattu) =>{
-        setdisplayModalDelete(true)  
-        setVattuDelete(vattu)
-    }
-    const handelCloseModalDelete = (message) =>{
-        dispatch(getALlNhanVIen())
-        setMessage(message)
-        setdisplayModalDelete(false)  
-        setVattuDelete(null)
-    }
+    console.log(nhanviens);
     return (
         <div className='container'>
             <h1 className={`${styles.title}`}>Nhân Viên</h1>
@@ -81,7 +71,7 @@ const NhanVienComponent = ()=>{
                                     <td className={nhanvien.active ? "text-success" : "text-danger"}>{nhanvien.active ?" Đã kích hoạt":"Đã Khóa"}</td>
                                     <td>
                                         <button className={`btn btn-primary ${styles.action}`} onClick={()=>handelXemThongTin(nhanvien.mNV)} >Xem thông tin</button>
-                                        <button className={`btn btn-danger ${styles.action}`} onClick={() =>handelShowModalDelete(nhanvien)} >Khóa</button>
+                                        <button className={`btn btn-danger ${styles.action}`} >Khóa</button>
                                     </td>
                                 </tr>
                             )
@@ -91,7 +81,6 @@ const NhanVienComponent = ()=>{
             </table>
             </div>
             {displayForm && <FormNhanVien display={displayForm} closeForm={handelCloseForm} NhanVien = {FormData}/>}
-            {/* {displayModalDelete && <ModalDelete display = {displayModalDelete} closeModal = {handelCloseModalDelete} Vattu = {VattuDelete} />} */}
         </div>
     )
 }

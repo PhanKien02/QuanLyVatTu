@@ -32,7 +32,6 @@ const createVatTu = async (req,res) =>{
 }
 const updateVattu = async (req,res) =>{
     const VTUpdate =req.body;
-    console.log(VTUpdate);
     try {
         const Vattu= await VatTu.update({
             mVT: VTUpdate.mVT,

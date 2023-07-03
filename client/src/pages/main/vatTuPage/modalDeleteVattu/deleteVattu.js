@@ -38,7 +38,6 @@ const ModalDelete = (props) =>{
             handelCloseModal("Không thể xóa vật tư")
         })     
     }
-    console.log(VatuDelete);
     return (
         <div>
             <Modal

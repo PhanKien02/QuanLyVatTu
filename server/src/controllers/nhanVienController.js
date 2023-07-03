@@ -1,44 +1,82 @@
+import fs from "fs";
 import ApiResult from "../configs/resultApi";
 import NhanhVien from "../models/NhanVien";
-const addNhanVien = async (req,res) =>{
+import User from "../models/User";
+const addNhanVien = async (req, res) => {
     const newUser = req.body;
     try {
-        const nhanVien =   await NhanhVien.create({
+        const nhanVien = await NhanhVien.create({
             tenNhanVien: newUser.tenNhanVien,
-            email :newUser.email,
-            ngaySinh : newUser.ngaySinh,
+            email: newUser.email,
+            ngaySinh: newUser.ngaySinh,
             soDienThoai: newUser.soDienThoai,
-            gioiTinh : newUser.gioiTinh,
-            mKV : newUser.mKV,
-            userId : newUser.idUser,
-            avatar : newUser.avatar,
-            active : 1
-        })
-        return res.status(200).json(new ApiResult("create Nhân viên success",nhanVien))
+            gioiTinh: newUser.gioiTinh,
+            mKV: newUser.mKV,
+            userId: newUser.idUser,
+            avatar: newUser.avatar,
+            active: 1,
+        });
+        return res
+            .status(200)
+            .json(new ApiResult("create Nhân viên success", nhanVien));
     } catch (error) {
         console.log(error);
-        return res.status(200).json(new ApiResult("add Nhân Viên faile",null))
+        return res.status(200).json(new ApiResult("add Nhân Viên faile", null));
     }
-    
-} 
-const getALlNhanVien = async (req,res) =>{
-    await NhanhVien.findAll({include:["KhuVuc","XaPhuong","User"]}).then(nhanviens =>{
-        console.log(nhanviens);
-        return res.status(200).json(new ApiResult("get all nhanvien success",nhanviens))
-    }).catch(err=>{
-        console.log(err);
-        return res.json(200).json(new ApiResult("get all nhan vien faild", []))
+};
+const getALlNhanVien = async (req, res) => {
+    await NhanhVien.findAll({ include: ["KhuVuc", "XaPhuong", "User"] })
+        .then((nhanviens) => {
+            console.log(nhanviens);
+            return res
+                .status(200)
+                .json(new ApiResult("get all nhanvien success", nhanviens));
+        })
+        .catch((err) => {
+            console.log(err);
+            return res
+                .json(200)
+                .json(new ApiResult("get all nhan vien faild", []));
+        });
+};
+const getNhanVienById = async (req, res) => {
+    await NhanhVien.findByPk(req.query.id, {
+        include: [
+            {
+                model: User,
+                as: "User",
+                attributes: ["userName", "active"],
+                include: ["ChucVu"],
+            },
+            "KhuVuc",
+            "XaPhuong",
+        ],
     })
-}
-const getNhanVienById = async (req,res) =>{
-    await NhanhVien.findByPk(req.query.id,{include:["KhuVuc","XaPhuong","User"]}).then(nhanvien =>{
-        console.log(nhanvien);
-        return res.status(200).json(new ApiResult("get nhanvien by Id success",nhanvien))
-    }).catch(err=>{
-        console.log(err);
-        return res.json(200).json(new ApiResult("get nhanvien by Id faild", []))
+        .then((nhanvien) => {
+            return res
+                .status(200)
+                .json(new ApiResult("get nhanvien by Id success", nhanvien));
+        })
+        .catch((err) => {
+            console.log(err);
+            return res
+                .status(200)
+                .json(new ApiResult("get nhanvien by Id faild", []));
+        });
+};
+const uploadAvatar = (req,res)=>{
+    const newavatar = `${process.env.BASE_URL}export/${req.file.filename}`
+        NhanhVien.update({avatar: newavatar},{where:{mNV : req.body.mNV}}).then(response=>{
+        return res.status(200).json(new ApiResult("Upload avatar thành công",response))
+    }).catch(error=>{
+        console.log(error);
+        fs.unlink(`./${req.file.path}`)
+        return res.status(200).json(new ApiResult("Upload avatar thất bại",{}))
     })
 }
 export default {
-    addNhanVien,getALlNhanVien,getNhanVienById
-}
+    addNhanVien,
+    getALlNhanVien,
+    getNhanVienById,
+    uploadAvatar
+};

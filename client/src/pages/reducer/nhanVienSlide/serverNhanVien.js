@@ -30,5 +30,19 @@ const deleteNhanVien = async () => {
         return response.data;
     } catch (error) {console.log(error);}
 };
-
-export default { getAllNhanVien,getNhanVienById,addNhanVien,deleteNhanVien,updateNhanVien}
+const uploadAvatar = async(avatar,mNV) =>{
+    try {
+        const response=  await request.post("avatar",{
+            mNV : mNV,
+            avatar : avatar
+        },{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+export default { getAllNhanVien,getNhanVienById,addNhanVien,deleteNhanVien,updateNhanVien,uploadAvatar}

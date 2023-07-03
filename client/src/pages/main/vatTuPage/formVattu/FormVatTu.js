@@ -70,26 +70,20 @@ const initValue =(data) =>{
 // * set value form
 const handleChangeMaVT =(event)=>{
     setMaVtValue(event.target.value)
-    console.log(maVtValue);
 }
 const handleChangeTenVT =(event)=>{
     settenVtValue( event.target.value)
-    console.log(tenVtValue);
 }
 const handleChangeSoLuongVT =(event)=>{
     setsoLuongValue(event.target.value) 
-    console.log(soLuongValue);
 }
 const handleChangeDonGiaVT =(event)=>{
     setdonGiaValue(event.target.value)
-    console.log(donGiaValue);
 }
 const handleChangeDonViTinhVT =(event)=>{
     setdonViTinhValue(event.target.value) ;
-    console.log(donViTinhValue);
 }
 const handleChangechungloaiVT =(event)=>{
-    console.log(event.target.value);
     setChungLoaiValue(event.target.value);
 }
 const handleChangeloaiVT =(event)=>{
@@ -97,7 +91,6 @@ const handleChangeloaiVT =(event)=>{
 }
 const handleChangeKhuVuc =(event)=>{
     setkhuVucValue( event.target.value)
-    console.log(khuVucValue);
 }
 
 const handleCloseForm = (message)=>{

@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import nhanVienService  from "../nhanVienSlide/serverNhanVien"
-
-const initialState = {
+let session = JSON.parse(sessionStorage.getItem('nhanvien'));
+let initialState = session ? session : {
     entities: [],
     entitie: {},
     loading: false,
     message : "",
-}
+};
+
 export const getALlNhanVIen = createAsyncThunk(
     'nhanvien/getAllNhanVien',
     async () => {
@@ -29,7 +30,18 @@ export const getNhanVIenById = createAsyncThunk(
         }
     }
 )
+export const uploadAvatar = createAsyncThunk("nhanvien/uploadAvatar",async({avatar,mNV})=>{
 
+    try {
+        const res=  await nhanVienService.uploadAvatar(avatar,mNV);
+        return res;
+    } catch (error) {
+        console.log(error);
+        return {
+            message: "upload avatar thất bại"
+        }
+    }
+})
 const listNhanVienSlide = createSlice({
     name: 'nhanvien',
     initialState : initialState,
@@ -43,6 +55,7 @@ const listNhanVienSlide = createSlice({
         .addCase(getALlNhanVIen.fulfilled,(state,action)=>{
             state.loading = false
             state.entities = action.payload
+            sessionStorage.setItem("nhanvien",JSON.stringify(state));
         })
         .addCase(getALlNhanVIen.rejected,(state,action)=>{
             state.loading = false
@@ -59,6 +72,12 @@ const listNhanVienSlide = createSlice({
         .addCase(getNhanVIenById.rejected,(state,action)=>{
             state.loading = false
             state.entitie = {}
+        })
+        .addCase(uploadAvatar.fulfilled,(state,action)=>{
+            state.message = "Upload data thành công"
+        })
+        .addCase(uploadAvatar.rejected,(state,action)=>{
+            state.message = "Upload data thất bại"
         })
     }
 })
