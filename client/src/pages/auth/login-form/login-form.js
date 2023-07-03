@@ -38,12 +38,13 @@ const LoginForm = () => {
                 setPassword("")
                 setUserName("")
             }
-        }).catch(error=>{
+        }
+        catch(error){
             console.log(error);
             setMessage("Không thể đăng nhập");
             setPassword("")
             setUserName("")
-        })
+        }
     }
     return (
         <div className={`${styles.login} container`}>
