@@ -2,7 +2,7 @@ import  React, { useEffect,useState }  from 'react';
 import styles from "./nhanVienComponent.module.scss";
 import formatDateToClient from "../../../../configs/formatDate";
 import FormNhanVien from '../FormNhanVien/formNhanVien';
-import {getALlNhanVIen} from "../../../reducer/nhanVienSlide/nhanVienSlide"
+import {getALlNhanVIen,getNhanVIenById} from "../../../reducer/nhanVienSlide/nhanVienSlide"
 import { useDispatch,useSelector } from 'react-redux';
 import {  useNavigate } from 'react-router-dom';
 const NhanVienComponent = ()=>{ 
@@ -20,7 +20,8 @@ const NhanVienComponent = ()=>{
         setFormData(data)
     }
     const handelXemThongTin= (id)=>{
-        navigate(`/user/${id}`)
+        dispatch(getNhanVIenById(id))
+        navigate(`/user/thong-tin`)
     }
     const handelCloseForm = (message)=>{
         dispatch(getALlNhanVIen())

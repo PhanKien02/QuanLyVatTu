@@ -7,28 +7,35 @@ const Login = lazy(() => import("./pages/auth/login-form/login-form"));
 const Register = lazy(() => import("./pages/auth/register-form/register-form"));
 const VatuComponent = lazy(() => import("./pages/main/vatTuPage/index/vatTuComponent"));
 const NhanVienComponen = lazy(() => import("./pages/main/NhanVienPage/indexs/nhanvienComponent"));
-const Profile = lazy(() => import("./pages/profileNhanVien/index/profile"));
-
+const Profile = lazy(() => import("./layouts/profileNhanVien/profile"));
+const Loading = lazy(() => import("./components/loading/loading"));
+const ThongTinCaNhan = lazy(()=>import("./pages/profileNhanVien/thongTinCaNhan/index"))
 const WebRoute = () => {
     return (
         <Router>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading/>}>
                 <RequireAuth>
                     <Routes>
-                        <Route path="/" element={<Home />}>
-                            <Route path="vattu" element={<VatuComponent />} />
+
+                        <Route path="/" element={<Suspense fallback={<Loading/>}><Home /></Suspense>}>
+                            <Route path="vattu" element={
+                                <Suspense fallback={<Loading/>}>
+                                        <VatuComponent/>
+                                </Suspense> } />
                             <Route
                                 path="nhan-vien"
-                                element={<NhanVienComponen />}
+                                element={<Suspense fallback={<Loading/>}><NhanVienComponen /></Suspense>}
                             />
                         </Route>
-                        <Route path="/user/:id" element={<Profile />} />
-                    </Routes>
+                        <Route path="/user" element={<Suspense fallback={<Loading/>}><Profile /></Suspense>} >
+                            <Route path="thong-tin" element={<ThongTinCaNhan/>} />
+                        </Route>
+                        </Routes>
                 </RequireAuth>
                 <Routes>
-                    <Route path="/auth" element={<Auth />}>
-                        <Route path="login" element={<Login />} />
-                        <Route path="register" element={<Register />} />
+                    <Route path="/auth" element={<Suspense fallback={<Loading/>}><Auth /></Suspense>}>
+                        <Route path="login" element={<Suspense fallback={<Loading/>} ><Login /></Suspense>} />
+                        <Route path="register" element={<Suspense fallback={<Loading/>} ><Register /></Suspense>} />
                     </Route>
                 </Routes>
             </Suspense>
