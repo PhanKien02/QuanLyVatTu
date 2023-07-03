@@ -29,7 +29,6 @@ const NhanVienComponent = ()=>{
         setdisplayForm(false)
         setFormData(null)
     }
-    console.log(nhanviens);
     return (
         <div className='container'>
             <h1 className={`${styles.title}`}>Nhân Viên</h1>
