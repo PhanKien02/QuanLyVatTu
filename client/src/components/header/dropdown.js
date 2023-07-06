@@ -13,7 +13,8 @@ function BasicExample(props) {
         dispath(action.LOG_OUT())
     };
     useEffect(()=>{
-        dispath(getNhanVIenById(user.current.NhanVien.mNV))
+        dispath(getNhanVIenById(user.current.NhanVien.mNV));
+        console.log("ef drop");
     },[dispath])
     return (
         <div style={{marginLeft : 250+"px"}}>

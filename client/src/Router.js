@@ -9,7 +9,7 @@ const VatuComponent = lazy(() => import("./pages/main/vatTuPage/index/vatTuCompo
 const NhanVienComponen = lazy(() => import("./pages/main/NhanVienPage/indexs/nhanvienComponent"));
 const Profile = lazy(() => import("./layouts/profileNhanVien/profile"));
 const Loading = lazy(() => import("./components/loading/loading"));
-const ThongTinCaNhan = lazy(()=>import("./pages/profileNhanVien/thongTinCaNhan/index"))
+const ThongTinCaNhan = lazy(()=>import("./pages/profileNhanVien/thongTinCaNhan/thongTinCaNhan"))
 const WebRoute = () => {
     return (
         <Router>
