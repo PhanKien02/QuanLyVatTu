@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from "react-redux";
-import { getKhuVuc } from "../../reducer/KhuVucSlide/khuVucSlide";
 import formatDateToClient from "../../../configs/formatDate";
 function ThongTinCaNhan() {
     const dispath = useDispatch();
     const nhanvien = useSelector((state) => state.nhanvien.entitie);
-    const listKhuVuc = useSelector((state) => state.khuVuc.entities);
+    // const listKhuVuc = useSelector((state) => state.khuVuc.entities);
     const [ngaysinh, setNgaySinh] = useState();
     const [gioiTinh, setGioiTinh] = useState(true);
     const [email, setEmail] = useState();
@@ -27,7 +26,7 @@ function ThongTinCaNhan() {
         setSDT(event.target.value)
     }
     useEffect(() => {
-        dispath(getKhuVuc());
+        // dispath(getKhuVuc());
         initForm();
     }, [dispath, nhanvien]);
     return (
@@ -92,7 +91,7 @@ function ThongTinCaNhan() {
                                 id="khuvuc"
                                 name="khuvuc"
                                 >
-                                {listKhuVuc.map((kv) => {
+                                {/* {listKhuVuc.map((kv) => {
                                     return (
                                         <option
                                             selected={khuVuc===kv.mKhu?true:false}
@@ -101,7 +100,7 @@ function ThongTinCaNhan() {
                                             {kv.tenKhuVuc}
                                         </option>
                                     );
-                                })}
+                                })} */}
                             </select>
                         </div>
                         <div className={`form-group`}>

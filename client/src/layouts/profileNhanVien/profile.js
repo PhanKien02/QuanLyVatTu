@@ -56,7 +56,7 @@ function Profile() {
                         <Link href="###">Gửi email</Link>
                     </div>
                 </div>
-                <div className="col-md-9 mt-5">
+                <div className="col-md-9 bg-secondary mt-5">
                     <Outlet/>
                 </div>
             </div>

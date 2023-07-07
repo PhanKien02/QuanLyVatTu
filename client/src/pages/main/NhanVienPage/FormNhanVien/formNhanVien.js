@@ -49,7 +49,7 @@ function FormNhanVien(props) {
                             <div className="group d-flex justify-content-between">
                                 <div className="form-group">
                                     <label htmlFor="phone">Số điện thoại</label>
-                                    <input required type="text"className="form-control" name="phone" id="phone" placeholder="Nhập số điện thoại" />
+                                    <input required type="text"  pattern="[+]?[0-9]" className="form-control" name="phone" id="phone" placeholder="Nhập số điện thoại" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>

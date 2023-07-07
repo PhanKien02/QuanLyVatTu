@@ -42,7 +42,7 @@ export const uploadAvatar = createAsyncThunk("nhanvien/uploadAvatar",async({avat
         }
     }
 })
-const NhanVienSlide = createSlice({
+const listNhanVienSlide = createSlice({
     name: 'nhanvien',
     initialState : initialState,
     reducers: {},
@@ -55,7 +55,7 @@ const NhanVienSlide = createSlice({
         .addCase(getALlNhanVIen.fulfilled,(state,action)=>{
             state.loading = false
             state.entities = action.payload
-            
+            sessionStorage.setItem("nhanvien",JSON.stringify(state));
         })
         .addCase(getALlNhanVIen.rejected,(state,action)=>{
             state.loading = false
@@ -68,7 +68,6 @@ const NhanVienSlide = createSlice({
         .addCase(getNhanVIenById.fulfilled,(state,action)=>{
             state.loading = false
             state.entitie = action.payload
-            sessionStorage.setItem("nhanvien",JSON.stringify(state));
         })
         .addCase(getNhanVIenById.rejected,(state,action)=>{
             state.loading = false
@@ -83,5 +82,5 @@ const NhanVienSlide = createSlice({
     }
 })
 
-export const  action = NhanVienSlide.actions;
-export default NhanVienSlide.reducer
+export const  action = listNhanVienSlide.actions;
+export default listNhanVienSlide.reducer
