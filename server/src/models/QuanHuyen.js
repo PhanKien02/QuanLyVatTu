@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../configs/connectdb").sequelize;
 import TinhThanh from "./TinhThanh";
+import XaPhuong from "./XaPhuong"
 const Quanhuyen = sequelize.define(
     "QuanHuyen",
     {
@@ -20,6 +21,12 @@ const Quanhuyen = sequelize.define(
 Quanhuyen.belongsTo(TinhThanh, {
     foreignKey: "tinhThanhId",
     as: "TinhThanh",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+});
+TinhThanh.hasMany(Quanhuyen,{
+    foreignKey:"tinhThanhId",
+    as :"QuanHuyen",
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
 });

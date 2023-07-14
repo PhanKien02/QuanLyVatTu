@@ -8,6 +8,7 @@ import {  useNavigate } from 'react-router-dom';
 const NhanVienComponent = ()=>{ 
     const dispatch = useDispatch();  
     const nhanviens = useSelector(state => state.nhanvien.entities)
+    const diachis = useSelector(state => state.diaChi.entities)
     const [displayForm,setdisplayForm] = useState(false);
     const [FormData,setFormData] = useState(null);
     const [message,setMessage] = useState("");

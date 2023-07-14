@@ -23,5 +23,11 @@ XaPhuong.belongsTo(QuanHuyen, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
 });
+QuanHuyen.hasMany(XaPhuong,{
+    foreignKey:"quanHuyenId",
+    as :"XaPhuong",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+})
 XaPhuong.sync();
 module.exports = XaPhuong;

@@ -6,6 +6,7 @@ import ChungLoai from "../controllers/chungLoaiVatTuController";
 import KhuVuc from "../controllers/khuVucController";
 import LoaiVatTu from "../controllers/loaiVatTuController";
 import NhanhVien from "../controllers/nhanVienController";
+import DiaChi from "../controllers/diaChiController"
 const multer = require('multer')
 const upload = multer(
     { fileFilter: multerMiddleware.multerFilter,
@@ -30,6 +31,7 @@ const ApiRouter = (app)=>{
     Router.get("/chungLoais",ChungLoai.getALlLoaiVatTu);
     Router.get("/loais",LoaiVatTu.getAllLoaiVatTu);
     Router.get("/khuvucs",KhuVuc.getAllKhuVuc);
+    Router.get("/diaChi",DiaChi.getTinhThanh)
 
     return app.use("/api",Router);
 }

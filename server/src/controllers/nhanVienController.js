@@ -2,6 +2,9 @@ import fs from "fs";
 import ApiResult from "../configs/resultApi";
 import NhanhVien from "../models/NhanVien";
 import User from "../models/User";
+import XaPhuong from "../models/XaPhuong"
+import QuanHuyen from "../models/QuanHuyen"
+import TinhThanh from "../models/TinhThanh"
 const addNhanVien = async (req, res) => {
     const newUser = req.body;
     try {
@@ -49,7 +52,18 @@ const getNhanVienById = async (req, res) => {
                 include: ["ChucVu"],
             },
             "KhuVuc",
-            "XaPhuong",
+            {
+                model: XaPhuong,
+                as :"XaPhuong",
+                include:{
+                    model : QuanHuyen,
+                    as :"QuanHuyen",
+                    include :{
+                        model : TinhThanh,
+                        as : "TinhThanh"
+                    }
+                }
+            }
         ],
     })
         .then((nhanvien) => {
