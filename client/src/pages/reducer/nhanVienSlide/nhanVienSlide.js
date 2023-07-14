@@ -24,6 +24,7 @@ export const getNhanVIenById = createAsyncThunk(
     async (id) => {
         try {
             const data=  await nhanVienService.getNhanVienById(id);
+            console.log(data);
             return data.data
         } catch (error) {
             console.log("get all nhan vien falild: ",error);
@@ -68,16 +69,17 @@ const listNhanVienSlide = createSlice({
         .addCase(getNhanVIenById.fulfilled,(state,action)=>{
             state.loading = false
             state.entitie = action.payload
+            sessionStorage.setItem("nhanvien",JSON.stringify(state));
         })
         .addCase(getNhanVIenById.rejected,(state,action)=>{
             state.loading = false
             state.entitie = {}
         })
         .addCase(uploadAvatar.fulfilled,(state,action)=>{
-            state.message = "Upload data thành công"
+            state.message = "Upload avatar thành công"
         })
         .addCase(uploadAvatar.rejected,(state,action)=>{
-            state.message = "Upload data thất bại"
+            state.message = "Upload avatar thất bại"
         })
     }
 })
