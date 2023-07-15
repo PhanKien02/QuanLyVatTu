@@ -24,19 +24,19 @@ const KhuVucSlide = createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(getKhuVuc.pending , (state,action)=>{
-            state.loading = true,
-            state.entities = [],
-            state.entitie = {}
+            state.loading = true;
+            state.entities = [];
+            state.entitie = {};
         })
         .addCase(getKhuVuc.fulfilled , (state,action)=>{
-            state.entities = action.payload,
-            state.loading = false,
-            state.entitie = {}
+            state.entities = action.payload;
+            state.loading = false;
+            state.entitie = {};
         })
         .addCase(getKhuVuc.rejected , (state,action)=>{
-            state.loading = false,
-            state.entities = [],
-            state.entitie = {}
+            state.loading = false;
+            state.entities = [];
+            state.entitie = {};
         })
     }
 })
