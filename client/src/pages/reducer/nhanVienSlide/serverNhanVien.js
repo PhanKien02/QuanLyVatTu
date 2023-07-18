@@ -12,9 +12,9 @@ const getNhanVienById = async (id) => {
         return response.data;
     } catch (error) {console.log(error);}
 };
-const addNhanVien = async () => {
+const addNhanVien = async (Entity) => {
     try {
-        const response = await request.get("nhanviens");
+        const response = await request.post("nhanvien",Entity);
         return response.data;
     } catch (error) {console.log(error);}
 };

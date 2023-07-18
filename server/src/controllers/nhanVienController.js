@@ -17,7 +17,7 @@ const addNhanVien = async (req, res) => {
             mKV: newUser.mKV,
             userId: newUser.idUser,
             avatar: newUser.avatar,
-            active: 1,
+            active: newUser.active,
         });
         return res
             .status(200)

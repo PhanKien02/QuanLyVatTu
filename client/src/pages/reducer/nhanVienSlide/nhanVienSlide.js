@@ -24,7 +24,6 @@ export const getNhanVIenById = createAsyncThunk(
     async (id) => {
         try {
             const data=  await nhanVienService.getNhanVienById(id);
-            console.log(data);
             return data.data
         } catch (error) {
             console.log("get all nhan vien falild: ",error);
@@ -32,7 +31,6 @@ export const getNhanVIenById = createAsyncThunk(
     }
 )
 export const uploadAvatar = createAsyncThunk("nhanvien/uploadAvatar",async({avatar,mNV})=>{
-
     try {
         const res=  await nhanVienService.uploadAvatar(avatar,mNV);
         return res;
@@ -43,6 +41,11 @@ export const uploadAvatar = createAsyncThunk("nhanvien/uploadAvatar",async({avat
         }
     }
 })
+export const addNhanVien = createAsyncThunk("nhanvien/addNhanvien",async (Entity,thunkAPI) =>{
+    const response = await nhanVienService.addNhanVien(Entity,);
+    thunkAPI.dispatch(getALlNhanVIen())
+    return response;
+})
 const listNhanVienSlide = createSlice({
     name: 'nhanvien',
     initialState : initialState,
@@ -50,37 +53,38 @@ const listNhanVienSlide = createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(getALlNhanVIen.pending,(state,action)=>{
-            state.loading = true
-            state.entities = []
+            state.loading = true;
+            state.entities = [];
         })
         .addCase(getALlNhanVIen.fulfilled,(state,action)=>{
-            state.loading = false
-            state.entities = action.payload
+            state.loading = false;
+            state.entities = action.payload;
             sessionStorage.setItem("nhanvien",JSON.stringify(state));
         })
         .addCase(getALlNhanVIen.rejected,(state,action)=>{
-            state.loading = false
-            state.entities = []
+            state.loading = false;
+            state.entities = [];
         })
         .addCase(getNhanVIenById.pending,(state,action)=>{
-            state.loading = true
-            state.entitie = {}
+            state.loading = true;
+            state.entitie = {};
         })
         .addCase(getNhanVIenById.fulfilled,(state,action)=>{
-            state.loading = false
-            state.entitie = action.payload
+            state.loading = false;
+            state.entitie = action.payload;
             sessionStorage.setItem("nhanvien",JSON.stringify(state));
         })
         .addCase(getNhanVIenById.rejected,(state,action)=>{
-            state.loading = false
-            state.entitie = {}
+            state.loading = false;
+            state.entitie = {};
         })
         .addCase(uploadAvatar.fulfilled,(state,action)=>{
-            state.message = "Upload avatar thành công"
+            state.message = "Upload avatar thành công";
         })
         .addCase(uploadAvatar.rejected,(state,action)=>{
-            state.message = "Upload avatar thất bại"
+            state.message = "Upload avatar thất bại";
         })
+
     }
 })
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./index.module.scss";
+import styles from "./thongTinCaNhan.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { getKhuVuc } from "../../reducer/khuvuc/khuVuc";

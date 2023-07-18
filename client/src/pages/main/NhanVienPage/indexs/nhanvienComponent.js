@@ -69,9 +69,9 @@ const NhanVienComponent = ()=>{
                                     <td>{nhanvien.gioiTinh?"Nam":"Nữ"}</td>
                                     <td>{nhanvien.KhuVuc.tenKhuVuc}</td>
                                     <td className={nhanvien.active ? "text-success" : "text-danger"}>{nhanvien.active ?" Đã kích hoạt":"Đã Khóa"}</td>
-                                    <td>
-                                        <button className={`btn btn-primary ${styles.action}`} onClick={()=>handelXemThongTin(nhanvien.mNV)} >Xem thông tin</button>
-                                        <button className={`btn btn-danger ${styles.action}`} >Khóa</button>
+                                    <td className='d-flex jusitfy-content-between'>
+                                        <button className={`btn btn-primary ${styles.action}`} onClick={()=>handelXemThongTin(nhanvien.mNV)} >Xem</button>
+                                        <button className={`btn ${nhanvien.active ? "btn-danger" :"btn-success"} ${styles.action}`} >{nhanvien.active ? "Khóa" : "Mở"}</button>
                                     </td>
                                 </tr>
                             )
