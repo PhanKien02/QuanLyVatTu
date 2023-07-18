@@ -30,9 +30,10 @@ export const getNhanVIenById = createAsyncThunk(
         }
     }
 )
-export const uploadAvatar = createAsyncThunk("nhanvien/uploadAvatar",async({avatar,mNV})=>{
+export const uploadAvatar = createAsyncThunk("nhanvien/uploadAvatar",async({avatar,mNV},thunkAPI)=>{
     try {
         const res=  await nhanVienService.uploadAvatar(avatar,mNV);
+        thunkAPI.dispatch(getNhanVIenById(mNV))
         return res;
     } catch (error) {
         console.log(error);
