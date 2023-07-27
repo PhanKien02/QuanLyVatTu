@@ -2,9 +2,9 @@ import fs from "fs";
 import ApiResult from "../configs/resultApi";
 import NhanhVien from "../models/NhanVien";
 import User from "../models/User";
-import XaPhuong from "../models/XaPhuong"
-import QuanHuyen from "../models/QuanHuyen"
-import TinhThanh from "../models/TinhThanh"
+import XaPhuong from "../models/XaPhuong";
+import QuanHuyen from "../models/QuanHuyen";
+import TinhThanh from "../models/TinhThanh";
 const addNhanVien = async (req, res) => {
     const newUser = req.body;
     try {
@@ -30,7 +30,6 @@ const addNhanVien = async (req, res) => {
 const getALlNhanVien = async (req, res) => {
     await NhanhVien.findAll({ include: ["KhuVuc", "XaPhuong", "User"] })
         .then((nhanviens) => {
-            console.log(nhanviens);
             return res
                 .status(200)
                 .json(new ApiResult("get all nhanvien success", nhanviens));
@@ -54,16 +53,16 @@ const getNhanVienById = async (req, res) => {
             "KhuVuc",
             {
                 model: XaPhuong,
-                as :"XaPhuong",
-                include:{
-                    model : QuanHuyen,
-                    as :"QuanHuyen",
-                    include :{
-                        model : TinhThanh,
-                        as : "TinhThanh"
-                    }
-                }
-            }
+                as: "XaPhuong",
+                include: {
+                    model: QuanHuyen,
+                    as: "QuanHuyen",
+                    include: {
+                        model: TinhThanh,
+                        as: "TinhThanh",
+                    },
+                },
+            },
         ],
     })
         .then((nhanvien) => {
@@ -78,19 +77,44 @@ const getNhanVienById = async (req, res) => {
                 .json(new ApiResult("get nhanvien by Id faild", []));
         });
 };
-const uploadAvatar = (req,res)=>{
-    const newavatar = `${process.env.BASE_URL}export/${req.file.filename}`
-        NhanhVien.update({avatar: newavatar},{where:{mNV : req.body.mNV}}).then(response=>{
-        return res.status(200).json(new ApiResult("Upload avatar thành công",response))
-    }).catch(error=>{
-        console.log(error);
-        fs.unlink(`./${req.file.path}`)
-        return res.status(200).json(new ApiResult("Upload avatar thất bại",{}))
-    })
-}
+const uploadAvatar = (req, res) => {
+    const newavatar = `${process.env.BASE_URL}export/${req.file.filename}`;
+    NhanhVien.update({ avatar: newavatar }, { where: { mNV: req.body.mNV } })
+        .then((response) => {
+            return res
+                .status(200)
+                .json(new ApiResult("Upload avatar thành công", response));
+        })
+        .catch((error) => {
+            console.log(error);
+            fs.unlink(`./${req.file.path}`);
+            return res
+                .status(200)
+                .json(new ApiResult("Upload avatar thất bại", {}));
+        });
+};
+const UpdateActive = async (req, res) => {
+    const nhanVien = await NhanhVien.findByPk(req.body.mNV,{
+        include : "User"
+    }
+    );
+    await  nhanVien.update( { active: req.body.active },
+            { where: { mNV: req.body.mNV } }
+            ).then( async ()=>{
+                const users = nhanVien.User;
+                users.forEach(async (user) => {
+                        await  user.update({active : req.body.active});
+                });
+                return new ApiResult("set active success",{});
+            }).catch(err =>{
+                console.log(err);
+                return new ApiResult("set active faild",{})
+            })
+};
 export default {
     addNhanVien,
     getALlNhanVien,
     getNhanVienById,
-    uploadAvatar
+    uploadAvatar,
+    UpdateActive,
 };

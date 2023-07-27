@@ -22,6 +22,7 @@ const ApiRouter = (app)=>{
     Router.get("/nhanviens",NhanhVien.getALlNhanVien);
     Router.post("/nhanvien",NhanhVien.addNhanVien);
     Router.get("/nhanvien",NhanhVien.getNhanVienById);
+    Router.post("/active",NhanhVien.UpdateActive);
     Router.post("/avatar",upload.single('avatar'),NhanhVien.uploadAvatar);
     Router.get("/vattus",VatTu.getAllVatTu);
     Router.post("/createvattu",VatTu.createVatTu);

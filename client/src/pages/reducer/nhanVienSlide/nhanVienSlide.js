@@ -42,6 +42,12 @@ export const uploadAvatar = createAsyncThunk("nhanvien/uploadAvatar",async({avat
         }
     }
 })
+export const setActiveStaff = createAsyncThunk("nhanvien/setActiveStaff",async ({active,mNV},thunkAPI) =>{
+    console.log({active:active,mNV:mNV});
+    const response = await nhanVienService.setAciveStaff({active:active,mNV:mNV});
+    thunkAPI.dispatch(getALlNhanVIen());
+    return response
+});
 export const addNhanVien = createAsyncThunk("nhanvien/addNhanvien",async (Entity,thunkAPI) =>{
     const response = await nhanVienService.addNhanVien(Entity,);
     thunkAPI.dispatch(getALlNhanVIen())
@@ -85,7 +91,12 @@ const listNhanVienSlide = createSlice({
         .addCase(uploadAvatar.rejected,(state,action)=>{
             state.message = "Upload avatar thất bại";
         })
-
+        .addCase(addNhanVien.fulfilled,(state,action)=>{
+            state.message = action.payload.data.message;
+        })
+        .addCase(setActiveStaff.fulfilled,(state,action)=>{
+            state.entitie = {};
+        })
     }
 })
 

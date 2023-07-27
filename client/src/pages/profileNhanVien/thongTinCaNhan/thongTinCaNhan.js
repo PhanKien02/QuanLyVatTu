@@ -27,9 +27,9 @@ function ThongTinCaNhan() {
         setGioiTinh(nhanvien.gioiTinh);
         setSDT(nhanvien.soDienThoai);
         setKhuVuc(nhanvien.mKV);
-        setTinhThanh(nhanvien.XaPhuong.QuanHuyen.TinhThanh.mTT);
-        setQuanHuyen(nhanvien.XaPhuong.QuanHuyen.mQH);
-        setXaPhuong(nhanvien.XaPhuong.mXP);
+            // setTinhThanh(nhanvien.XaPhuong.QuanHuyen.TinhThanh.mTT);
+            // setQuanHuyen(nhanvien.XaPhuong.QuanHuyen.mQH);
+            // setXaPhuong(nhanvien.XaPhuong.mXP);
     };
 
     const onchangeEmail = (event) => {

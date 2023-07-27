@@ -45,4 +45,12 @@ const uploadAvatar = async(avatar,mNV) =>{
         console.log(error);
     }
 }
-export default { getAllNhanVien,getNhanVienById,addNhanVien,deleteNhanVien,updateNhanVien,uploadAvatar}
+const setAciveStaff = async ({active,mNV}) =>{
+    console.log({active:active,mNV:mNV});
+    await request.post("active",{active:active,mNV:mNV}).then((response)=>{
+        return response
+    }).catch (err =>{
+        console.log(err);
+    })
+}
+export default { getAllNhanVien,getNhanVienById,addNhanVien,deleteNhanVien,updateNhanVien,uploadAvatar,setAciveStaff}

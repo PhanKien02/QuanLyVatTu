@@ -2,13 +2,12 @@ import  React, { useEffect,useState }  from 'react';
 import styles from "./nhanVienComponent.module.scss";
 import formatDateToClient from "../../../../configs/formatDate";
 import FormNhanVien from '../FormNhanVien/formNhanVien';
-import {getALlNhanVIen,getNhanVIenById} from "../../../reducer/nhanVienSlide/nhanVienSlide"
+import {getALlNhanVIen,getNhanVIenById, setActiveStaff} from "../../../reducer/nhanVienSlide/nhanVienSlide"
 import { useDispatch,useSelector } from 'react-redux';
 import {  useNavigate } from 'react-router-dom';
 const NhanVienComponent = ()=>{ 
     const dispatch = useDispatch();  
     const nhanviens = useSelector(state => state.nhanvien.entities)
-    const diachis = useSelector(state => state.diaChi.entities)
     const [displayForm,setdisplayForm] = useState(false);
     const [FormData,setFormData] = useState(null);
     const [message,setMessage] = useState("");
@@ -29,6 +28,9 @@ const NhanVienComponent = ()=>{
         setMessage(message)
         setdisplayForm(false)
         setFormData(null)
+    }
+    const handleSetActive = (active,mNV) =>{
+        active ? dispatch(setActiveStaff({active : false, mNV:mNV})) :dispatch(setActiveStaff({active : true, mNV:mNV}))      
     }
     return (
         <div className='container'>
@@ -71,7 +73,7 @@ const NhanVienComponent = ()=>{
                                     <td className={nhanvien.active ? "text-success" : "text-danger"}>{nhanvien.active ?" Đã kích hoạt":"Đã Khóa"}</td>
                                     <td className='d-flex jusitfy-content-between'>
                                         <button className={`btn btn-primary ${styles.action}`} onClick={()=>handelXemThongTin(nhanvien.mNV)} >Xem</button>
-                                        <button className={`btn ${nhanvien.active ? "btn-danger" :"btn-success"} ${styles.action}`} >{nhanvien.active ? "Khóa" : "Mở"}</button>
+                                        <button className={`btn ${nhanvien.active ? "btn-danger" :"btn-success"} ${styles.action}`} onClick={()=>handleSetActive(nhanvien.active,nhanvien.mNV)} >{nhanvien.active ? "Khóa" : "Mở"}</button>
                                     </td>
                                 </tr>
                             )
