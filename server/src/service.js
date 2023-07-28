@@ -1,5 +1,6 @@
 const express = require('express');
 var morgan = require('morgan')
+let cookieParser = require('cookie-parser');
 import cors from 'cors';
 import bodyParser from "body-parser";
 import db from "./configs/connectdb"
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.text())
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
+app.use(cookieParser())
 configsView(app);
 db.authen();
 db.creteTable();
