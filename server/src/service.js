@@ -27,7 +27,7 @@ app.use(bodyParser.text())
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin:["http://localhost:3000"],
-    methods: ["GET","POST"],
+    methods: ["GET","POST","PUT","DELETE"],
     credentials : true,
 }))
 app.use(cookieParser())
