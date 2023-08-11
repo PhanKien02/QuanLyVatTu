@@ -17,7 +17,7 @@ const checkUser = async (userName)=>{
 const findUser= async (userName)=>{
     try {
         const user = await User.findOne(
-            {   attributes:["userName","active"],
+            {   attributes:["id","userName","active"],
                 where : {userName : userName, active:true},
                 include:"NhanVien",              
             })
@@ -46,14 +46,9 @@ const comparePassword = (password,hashedPassword)=>{
         console.log(error);
     }
 }
-const generateToken= (data,exp) =>{
-    const token=  jwt.sign({ useId: data }, process.env.PRIVATEKEY, { expiresIn: exp });
-    return token
-}
 const newUser = async (req,res)=>{
     
     const user = req.body;
-    console.log(user);
     const check = await checkUser(user.userName);
     if(check)
         {
@@ -78,20 +73,23 @@ const LoginUser = async (req,res)=>{
     if(check){
         try {
             const login = await findUser(req.body.userName)
-            console.log(login);
             const checkpass = await comparePassword(req.body.password,check.password)
             if(checkpass)
                 {
-                    const newToken =generateToken(login.id,'1m')
-                    const refreshToken =generateToken(login.id,'1d')
+                    const newToken =jwt.sign({id : login.id},process.env.PRIVATEKEY,{expiresIn:"30s" ,algorithm:"HS256"})
+                    const refreshToken =jwt.sign({id : login.id},process.env.PRIVATEKEY_REFRESH,{expiresIn : "1d"  ,algorithm:"HS256"})
                     const User = {
                         user : login,
                         token : newToken,
                     }
+                    console.log(refreshToken);
                     const data = new ApiResult("login success",User) 
-                    return res.cookie('jwt', refreshToken, { httpOnly: true, 
-                        sameSite: 'None', secure: true, 
-                        maxAge: 24 * 60 * 60 * 1000 }).status(200).json(data);
+                    return res.clearCookie("refreshToken").cookie('refreshToken',refreshToken,{
+                        httpOnly: true,
+                        sameSite: "strict",
+                        secure: true,
+                        maxAge: 24 * 60 * 60 * 1000 
+                    }).status(200).json(data)
                 }
             else{
                 const User = {

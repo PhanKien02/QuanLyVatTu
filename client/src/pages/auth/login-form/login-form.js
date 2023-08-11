@@ -25,10 +25,10 @@ const LoginForm = () => {
     const login = () => {
         service.Login(userName, password).then((response) => {
             try {
+                console.log(response);
                 if (response.data.user) {
                     const user = response.data.user;
                     const token = response.data.token;
-                    request.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
                     dispatch(action.LOG_IN({ user: user, token: token }));
                     navigate("/");
                 } else {
