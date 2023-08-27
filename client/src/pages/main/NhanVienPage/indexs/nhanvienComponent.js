@@ -7,7 +7,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import {  useNavigate } from 'react-router-dom';
 const NhanVienComponent = ()=>{ 
     const dispatch = useDispatch();  
-    const nhanviens = useSelector(state => state.nhanvien.entities)
+    const nhanviens = useSelector(state => state.nhanvien.entities ? state.nhanvien.entities : []);
     const [displayForm,setdisplayForm] = useState(false);
     const [FormData,setFormData] = useState(null);
     const [message,setMessage] = useState("");
@@ -20,8 +20,8 @@ const NhanVienComponent = ()=>{
         setFormData(data)
     }
     const handelXemThongTin= (id)=>{
-        dispatch(getNhanVIenById(id))
         navigate(`/user/thong-tin`)
+        dispatch(getNhanVIenById(id))
     }
     const handelCloseForm = (message)=>{
         dispatch(getALlNhanVIen())
