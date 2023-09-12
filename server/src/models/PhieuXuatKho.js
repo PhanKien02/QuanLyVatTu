@@ -12,6 +12,7 @@ const PhieuXuatKho = sequelize.define(
             primaryKey: true,
         },
         NgayXuat: { type: DataTypes.DATE, allowNull: false },
+        TrangThai: { type: DataTypes.BOOLEAN, allowNull: false },
     },
     {
         freezeTableName: true,

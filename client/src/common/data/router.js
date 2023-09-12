@@ -1,7 +1,7 @@
 // import RouteInfor from "../models/route-infor";
 const Routes = [
     { path: "/", title: "Home", icon: "fas fa-home" },
-    { path: "/", title: "Xuất Nhập Kho", icon: "fas fa-warehouse" },
+    { path: "/xuat-nhap-kho", title: "Xuất Nhập Kho", icon: "fas fa-warehouse" },
     { path: "/", title: "Hóa Đơn", icon: "fas fa-file-invoice-dollar" },
     { path: "/nhan-vien", title: "Nhân Viên", icon: "fas fa-users" },
     { path: "vattu", title: "Vật tư", icon: "fas fa-industry" },

@@ -6,10 +6,13 @@ const Auth = lazy(() => import("./layouts/auth/auth"));
 const Login = lazy(() => import("./pages/auth/login-form/login-form"));
 const Register = lazy(() => import("./pages/auth/register-form/register-form"));
 const VatuComponent = lazy(() => import("./pages/main/vatTuPage/index/vatTuComponent"));
+const XuatNhapKhoComponent = lazy(()=> import("./pages/main/XuatNhapKhoPage/XuatNhapKhoComponent"))
 const NhanVienComponen = lazy(() => import("./pages/main/NhanVienPage/indexs/nhanvienComponent"));
 const Profile = lazy(() => import("./layouts/profileNhanVien/profile"));
 const Loading = lazy(() => import("./components/loading/loading"));
 const ThongTinCaNhan = lazy(()=>import("./pages/profileNhanVien/thongTinCaNhan/thongTinCaNhan"))
+const NhapKhoComponent = lazy(()=>import("./pages/main/XuatNhapKhoPage/nhapKhoPage/nhapkhoComponent"))
+const XuatKhoComponent = lazy(()=>import("./pages/main/XuatNhapKhoPage//xuatKhoPage/xuatKhoComponent"))
 const WebRoute = () => {
     return (
         <Router>
@@ -22,6 +25,17 @@ const WebRoute = () => {
                                 <Suspense fallback={<Loading/>}>
                                         <VatuComponent/>
                                 </Suspense> } />
+                            <Route path="/xuat-nhap-kho" element={
+                                <Suspense fallback={<Loading/>}>
+                                        <XuatNhapKhoComponent/>
+                                </Suspense> } >
+                                    <Route path="nhap-Kho" element ={<Suspense fallback={<Loading/>}>
+                                        <NhapKhoComponent/>
+                                    </Suspense>} />
+                                    <Route path="xuat-Kho" element ={<Suspense fallback={<Loading/>}>
+                                        <XuatKhoComponent/>
+                                    </Suspense>} />
+                                </Route>
                             <Route
                                 path="nhan-vien"
                                 element={<Suspense fallback={<Loading/>}><NhanVienComponen /></Suspense>}
